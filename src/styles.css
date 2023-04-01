@@ -83,13 +83,13 @@ a {
   height: 40px;
   background: white;
   border-radius: 10px;
-  color: #26d07c;
+  color: #17B1E7;
   font-weight: bold;
   font-size: 15px;
   margin-top: 5%;
   transition: 300ms all;
   cursor: pointer;
-  border: 1px solid #26D07C;
+  border: 1px solid #17B1E7;
   box-sizing: border-box;
   max-width: 263px; }
 
@@ -180,7 +180,7 @@ a {
   margin: 0 auto 100px; }
 
 .title {
-  color: #26d07c !important;
+  color: #17B1E7 !important;
   font-size: 24px;
   font-weight: 700;
 }
@@ -220,10 +220,10 @@ a {
 .options a {
   margin: 0 2rem; }
 .options a:hover {
-  color: #26D07C !important; }
+  color: #17B1E7 !important; }
 
 .active {
-  color: #26D07C !important; }
+  color: #17B1E7 !important; }
 
 .full-form {
   width: 65%;
@@ -378,7 +378,7 @@ tbody {
 :root {
   --klap_blanco: #fff;
   --klap_azul: #002b49;
-  --klap_verde: #26D07C;
+  --klap_verde: #17B1E7;
   --klap_celeste: #EFF8FF;
   --klap_grisaux_1: #f9f9f9;
   --klap_grisaux_2: #53575A;
@@ -550,7 +550,7 @@ tbody {
   content: "";
   position: absolute;
   width: 6px;
-  background-color: #26d07c;
+  background-color: #17B1E7;
   height: 100%;
   left: 0;
   top: 0;
@@ -657,10 +657,10 @@ input:focus, select:focus, textarea:focus, button:focus {
   transition: .4s; }
 
 input:checked + .slider {
-  background-color: #26d07c; }
+  background-color: #17B1E7; }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #26d07c; }
+  box-shadow: 0 0 1px #17B1E7; }
 
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
@@ -721,7 +721,7 @@ input:checked + .slider:before {
   background-color: var(--klap_grisaux_1); }
 
 .fist_card_header-a {
-  background-color: #26d07c;
+  background-color: #17B1E7;
   border-radius: calc(0.25rem - 1px) 0px 0px 0px; }
 
 .loading-wrapper {
@@ -738,10 +738,10 @@ input:checked + .slider:before {
   z-index: 998; }
 
 .mat-expansion-indicator {
-  color: #26d07c; }
+  color: #17B1E7; }
 
 .mat-expansion-indicator::after {
-  color: #26d07c; }
+  color: #17B1E7; }
 
 
 .toolbar {
@@ -790,7 +790,7 @@ input:checked + .slider:before {
   padding: 7px 15px;
   height: 40px;
   width: 100%;
-  background: #26d07c;
+  background: #17B1E7;
   border-radius: 10px;
   color: white;
   font-weight: bold;
@@ -817,7 +817,7 @@ input:checked + .slider:before {
 }
 
 .noti-azul .mat-simple-snackbar-action {
-  color: #26cd7b;
+  color: #17B1E7;
 }
 
 .searchbar {
@@ -846,7 +846,7 @@ input:checked + .slider:before {
 }
 
 .link-integrador {
-  color: #26cd7b;
+  color: #17B1E7;
   text-decoration: underline;
   cursor: pointer;
 }
