@@ -1,0 +1,27 @@
+<div class="container" style="padding-top: 4rem">
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6 text-center">
+      <form class="full-form" #loginForm="ngForm">
+        <!-- LOGO -->
+        <div class="logo-login pb-4">
+          <img src="assets/images/logo-nma.gif" alt="Logo NMA"/>
+        </div>
+        <br>
+        <h2 class="subtitle pb-4">Sitio Privado NMA</h2>
+        <div class="form-group">
+          <label for="user-name">Usuario</label>
+          <input [(ngModel)]="request.user" #username="ngModel" type="text" class="input-login" id="user-name"
+                 name="user-name" placeholder="Usuario" required />
+        </div>
+        <div class="form-group">
+          <label for="user-pass">Clave</label>
+          <input [(ngModel)]="request.password" #password="ngModel" type="password" class="input-login" id="user-pass"
+                 name="user-pass" placeholder="********" required />
+        </div>
+        <input type="submit" value="Ingresar" class='mt-5 btn-green loggin shadow-none' [disabled]="loginForm.invalid" (click)="login()"/>
+      </form>
+    </div>
+    <div class="col-3"></div>
+  </div>
+</div>
