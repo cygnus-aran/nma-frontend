@@ -2,8 +2,15 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../environments/environment";
-import {FindAllResponse, LoginRequest, LoginResponse} from "../model/user";
+import {
+  EmployeeRegisterRequest,
+  EmployeeRegisterResponse, FindAllEmployeesResponse,
+
+  LoginRequest,
+  LoginResponse
+} from "../model/user";
 import {catchError, retry} from "rxjs";
+import {ClientRegisterRequest, ClientRegisterResponse, FindAllClientsResponse} from "../model/cliente";
 
 
 
@@ -30,7 +37,32 @@ export class RestService {
     }
 
     listEmployees(){
-      return this.http.get<FindAllResponse>(this.URL_SERVICE + 'employee/find-all',
+      return this.http.get<FindAllEmployeesResponse>(this.URL_SERVICE + 'employee/find-all',
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    deleteEmployee(request: EmployeeRegisterRequest){
+      return this.http.post<EmployeeRegisterResponse>(this.URL_SERVICE + 'employee/delete-employee', request,
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    registerEmployee(request: EmployeeRegisterRequest){
+      return this.http.post<EmployeeRegisterResponse>(this.URL_SERVICE + 'employee/register-employee', request,
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    listClients(){
+      return this.http.get<FindAllClientsResponse>(this.URL_SERVICE + 'client/find-all',
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    deleteClient(request: ClientRegisterRequest){
+      return this.http.post<ClientRegisterResponse>(this.URL_SERVICE + 'client/delete-client', request,
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    registerClient(request: ClientRegisterRequest){
+      return this.http.post<ClientRegisterResponse>(this.URL_SERVICE + 'employee/register-client', request,
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
     }
 

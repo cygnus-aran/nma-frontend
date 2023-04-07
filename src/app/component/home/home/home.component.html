@@ -3,16 +3,10 @@
   <nav class="navbar">
     <!-- LOGO -->
     <div class="logo">
-      <img src="assets/images/logo-nma.gif" alt="Logo NMA" />
+      <img src="assets/images/logo-nma.gif" alt="Logo NMA" style="width: 96px; height: 42px"/>
     </div>
     <div class="options">
-      <a [routerLink]="['/home']" class="text-decoration-none pt-2">Inicio</a>
-      <div class="col-4 input-icon">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M17.5 17.5L13.875 13.875" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
+      <a [routerLink]="['/home']" class="text-decoration-none">Inicio</a>
       <div class="col-4">
       </div>
     </div>
@@ -36,6 +30,17 @@
     <div class="col-6">
     </div>
   </div>
+  <div class="row pt-3">
+    <div class="col-12" style="padding-left: 10%; padding-right: 10%;">
+      <button class="btn-green-form shadow-none float-end" style="width: 205px;" (click)="openModal(crearEmpleado)" >Ingresar Empleado</button>
+      <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem" (click)="openModal(crearCliente)">Ingresar Cliente</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h3 class="title-blue pb-2 pt-2">Control de Usuarios</h3>
+    </div>
+  </div>
   <div class="row">
     <div class="col-12" style="padding-left: 10%; padding-right: 10%;">
       <div class="border-tabla mb-3">
@@ -45,31 +50,28 @@
             <th scope="col">Empleado</th>
             <th scope="col">Rut</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Id Empresa</th>
+            <th scope="col">Empresa</th>
             <th scope="col">Fecha Alta</th>
-            <th scope="col">Fecha Baja</th>
-            <th scope="col">Fecha Nacimiento</th>
             <th scope="col">Estado</th>
             <th scope="col">Puesto</th>
             <th scope="col">Rol</th>
-            <th scope="col">Password</th>
             <th scope="col"></th>
           </tr>
           </thead>
           <tbody class="admuser">
           <tr *ngFor="let employee of this.emps" class="back-tab-user">
-            <td id="{{employee.idUsuario}}a" class="link-integrador">{{employee.idUsuario}}</td>
-            <td id="{{employee.idUsuario}}b" class="link-integrador">{{employee.rutPersona}}</td>
-            <td id="{{employee.idUsuario}}c" class="link-integrador">{{employee.nombrePersona}}</td>
-            <td id="{{employee.idUsuario}}d" class="link-integrador">{{employee.idEmpresa}}</td>
-            <td id="{{employee.idUsuario}}e" class="link-integrador">{{employee.fechaAlta}}</td>
-            <td id="{{employee.idUsuario}}f" class="link-integrador">{{employee.fechaBaja}}</td>
-            <td id="{{employee.idUsuario}}g" class="link-integrador">{{employee.fechaNacimiento}}</td>
-            <td id="{{employee.idUsuario}}h" class="link-integrador">{{employee.estadoPersona}}</td>
-            <td id="{{employee.idUsuario}}i" class="link-integrador">{{employee.puestoPersona}}</td>
-            <td id="{{employee.idUsuario}}j" class="link-integrador">{{employee.idRol}}</td>
-            <td id="{{employee.idUsuario}}k" class="link-integrador">{{employee.password}}</td>
-            <td id="{{employee.idUsuario}}l" class="link-integrador">
+            <td id="{{employee.idUsuario}}a">{{employee.idUsuario}}</td>
+            <td id="{{employee.idUsuario}}b">{{employee.rutPersona}}</td>
+            <td id="{{employee.idUsuario}}c">{{employee.nombrePersona}}</td>
+            <td id="{{employee.idUsuario}}d">
+              <span *ngIf="employee.idEmpresa == '1'">NMA</span>
+              <span *ngIf="employee.idEmpresa != '1'">Cliente</span>
+            </td>
+            <td id="{{employee.idUsuario}}e">{{employee.fechaAlta}}</td>
+            <td id="{{employee.idUsuario}}h">{{employee.estadoPersona}}</td>
+            <td id="{{employee.idUsuario}}i">{{employee.puestoPersona}}</td>
+            <td id="{{employee.idUsuario}}j">{{employee.idRol}}</td>
+            <td id="{{employee.idUsuario}}l" (click)="deleteUser(employee)" style="cursor: pointer">
               <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_78915_12021)">
                   <path d="M17.2241 9.78214C16.8749 9.78214 16.5918 10.0652 16.5918 10.4145V22.3652C16.5918 22.7142 16.8749 22.9976 17.2241 22.9976C17.5734 22.9976 17.8564 22.7142 17.8564 22.3652V10.4145C17.8564 10.0652 17.5734 9.78214 17.2241 9.78214Z" fill="#17B1E7"/>
@@ -90,10 +92,137 @@
       </div>
     </div>
   </div>
-  <div class="row pt-5">
+  <div class="row pt-3">
+    <div class="col-12">
+      <h3 class="title-blue pb-2 pt-2">Control de Clientes</h3>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-12" style="padding-left: 10%; padding-right: 10%;">
-      <button class="btn-green-form shadow-none float-end" style="width: 205px;" >Ingresar Empleado</button>
-      <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem">Ingresar Cliente</button>
+      <div class="border-tabla mb-3">
+        <table class="table text-center tabla-desktop-admuser mb-0 table-hover d-md-table d-none" style="text-align: center; border-radius: 10px" aria-describedby="tabla-integradores">
+          <thead>
+          <tr class="bg-2 color-1">
+            <th scope="col">Empresa</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Direcci&oacute;n</th>
+            <th scope="col">Fono</th>
+            <th scope="col">Email</th>
+            <th scope="col">Responsable</th>
+            <th scope="col">Estado</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody class="admuser">
+          <tr *ngFor="let cl of this.cls" class="back-tab-user">
+            <td id="{{cl.idEmpresa}}a">{{cl.idEmpresa}}</td>
+            <td id="{{cl.idEmpresa}}b">{{cl.nombreEmpresa}}</td>
+            <td id="{{cl.idEmpresa}}c">{{cl.direccionEmpresa}}</td>
+            <td id="{{cl.idEmpresa}}d">{{cl.fonoEmpresa}}</td>
+            <td id="{{cl.idEmpresa}}e">{{cl.emailEmpresa}}</td>
+            <td id="{{cl.idEmpresa}}h">{{cl.responsableEmpresa}}</td>
+            <td id="{{cl.idEmpresa}}i">{{cl.estadoEmpresa}}</td>
+            <td id="{{cl.idEmpresa}}l" (click)="deleteClient(cl)" style="cursor: pointer">
+              <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_78915_12021)">
+                  <path d="M17.2241 9.78214C16.8749 9.78214 16.5918 10.0652 16.5918 10.4145V22.3652C16.5918 22.7142 16.8749 22.9976 17.2241 22.9976C17.5734 22.9976 17.8564 22.7142 17.8564 22.3652V10.4145C17.8564 10.0652 17.5734 9.78214 17.2241 9.78214Z" fill="#17B1E7"/>
+                  <path d="M9.76318 9.78214C9.41392 9.78214 9.13086 10.0652 9.13086 10.4145V22.3652C9.13086 22.7142 9.41392 22.9976 9.76318 22.9976C10.1124 22.9976 10.3955 22.7142 10.3955 22.3652V10.4145C10.3955 10.0652 10.1124 9.78214 9.76318 9.78214Z" fill="#17B1E7"/>
+                  <path d="M4.32518 8.03808V23.617C4.32518 24.5378 4.66283 25.4026 5.25266 26.023C5.83977 26.6452 6.65685 26.9984 7.51196 26.9999H19.4756C20.3309 26.9984 21.148 26.6452 21.7349 26.023C22.3247 25.4026 22.6624 24.5378 22.6624 23.617V8.03808C23.8349 7.72687 24.5946 6.59413 24.4378 5.391C24.2807 4.18812 23.2559 3.2883 22.0426 3.28805H18.8052V2.49766C18.8089 1.83298 18.5461 1.19474 18.0756 0.725195C17.6051 0.255897 16.9658 -0.00542718 16.3012 6.78727e-06H10.6864C10.0217 -0.00542718 9.38248 0.255897 8.91194 0.725195C8.44141 1.19474 8.17861 1.83298 8.18231 2.49766V3.28805H4.9449C3.73164 3.2883 2.70684 4.18812 2.54975 5.391C2.39291 6.59413 3.15268 7.72687 4.32518 8.03808ZM19.4756 25.7353H7.51196C6.43084 25.7353 5.58981 24.8066 5.58981 23.617V8.09366H21.3977V23.617C21.3977 24.8066 20.5567 25.7353 19.4756 25.7353ZM9.44694 2.49766C9.44274 2.16841 9.57217 1.85151 9.80583 1.61908C10.0392 1.38666 10.3569 1.25896 10.6864 1.26464H16.3012C16.6307 1.25896 16.9483 1.38666 17.1817 1.61908C17.4154 1.85126 17.5448 2.16841 17.5406 2.49766V3.28805H9.44694V2.49766ZM4.9449 4.55269H22.0426C22.6713 4.55269 23.1808 5.06224 23.1808 5.69086C23.1808 6.31947 22.6713 6.82903 22.0426 6.82903H4.9449C4.31629 6.82903 3.80673 6.31947 3.80673 5.69086C3.80673 5.06224 4.31629 4.55269 4.9449 4.55269Z" fill="#17B1E7"/>
+                  <path d="M13.4936 9.78214C13.1444 9.78214 12.8613 10.0652 12.8613 10.4145V22.3652C12.8613 22.7142 13.1444 22.9976 13.4936 22.9976C13.8429 22.9976 14.126 22.7142 14.126 22.3652V10.4145C14.126 10.0652 13.8429 9.78214 13.4936 9.78214Z" fill="#17B1E7"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_78915_12021">
+                    <rect width="27" height="27" fill="white"/>
+                  </clipPath>
+                </defs>
+              </svg>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
+<ng-template #crearEmpleado>
+  <div class="modal-body" style="max-width: 600px; padding: 45px 45px 30px 45px;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group pb-5">
+            <label for="re">Rut Empleado</label>
+            <input type="text" class="input-login" id="re" name="re" [(ngModel)]="empObs.rutPersona" placeholder="Sin punto ni guion"/>
+          </div>
+          <div class="form-group pb-5">
+            <label for="ne">Nombre Empleado</label>
+            <input type="text" class="input-login" id="ne" name="ne" [(ngModel)]="empObs.nombrePersona" placeholder=""/>
+          </div>
+          <div class="form-group pb-5">
+            <label for="ee">Empresa</label>
+            <select class="form-control input-login" id="ee" name="ee" [(ngModel)]="empObs.idEmpresa" style="appearance: menulist-button">
+              <option *ngFor="let empresa of this.listEmpresa" [value]="empresa.id">{{empresa.nombre}}</option>
+            </select>
+          </div>
+          <div class="form-group pb-5">
+            <label for="ese">Estado</label>
+            <select class="form-control input-login" id="ese" name="ese" [(ngModel)]="empObs.estadoPersona" style="appearance: menulist-button">
+              <option *ngFor="let estado of this.listEstado" [value]="estado.id">{{estado.nombre}}</option>
+            </select>
+          </div>
+          <div class="form-group pb-5">
+            <label for="pe">Puesto</label>
+            <select class="form-control input-login" id="pe" name="pe" [(ngModel)]="empObs.idRol" style="appearance: menulist-button" (change)="asignarPuesto(empObs.idRol)">
+              <option *ngFor="let puesto of this.listPuesto" [value]="puesto.rol">{{puesto.nombre}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-12 order-2 order-md-1">
+          <button type="button" class="btn-outline-blue"  style="max-width: 208px" (click)="closeDialog()">Volver</button>
+        </div>
+        <div class="col-md-6 col-12 order-1 order-md-2">
+          <button type="button" class="btn-blue" style="max-width: 208px" [disabled]="!validarFormularioEmpleado()" (click)="createUser()">Crear Usuario</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #crearCliente>
+  <div class="modal-body" style="max-width: 600px; padding: 45px 45px 30px 45px;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group pb-5">
+            <label for="nem">Nombre Empresa</label>
+            <input type="text" class="input-login" id="nem" name="nem" [(ngModel)]="clObs.nombreEmpresa" placeholder="Sin punto ni guion"/>
+          </div>
+          <div class="form-group pb-5">
+            <label for="de">Direcci&oacute;n Empresa</label>
+            <input type="text" class="input-login" id="de" name="de" [(ngModel)]="clObs.direccionEmpresa" placeholder=""/>
+          </div>
+          <div class="form-group pb-5">
+            <label for="fe">Fono Empresa</label>
+            <input type="text" class="input-login" id="fe" name="fe" [(ngModel)]="clObs.fonoEmpresa" placeholder=""/>
+          </div>
+          <div class="form-group pb-5">
+            <label for="eme">Email Empresa</label>
+            <input type="text" class="input-login" id="eme" name="eme" [(ngModel)]="clObs.emailEmpresa" placeholder=""/>
+          </div>
+          <div class="form-group pb-5">
+            <label for="rem">Responsable Empresa</label>
+            <input type="text" class="input-login" id="rem" name="ren" [(ngModel)]="clObs.responsableEmpresa" placeholder=""/>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-12 order-2 order-md-1">
+          <button type="button" class="btn-outline-blue"  style="max-width: 208px" (click)="closeDialog()">Volver</button>
+        </div>
+        <div class="col-md-6 col-12 order-1 order-md-2">
+          <button type="button" class="btn-blue" style="max-width: 208px" [disabled]="!validarFormularioCliente()" (click)="createUser()">Crear Usuario</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

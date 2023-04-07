@@ -19,13 +19,13 @@ export interface LoginResponseData {
   rol: string;
 }
 
-export interface FindAllResponse {
+export interface FindAllEmployeesResponse {
   code: number;
   message: string;
-  data: FindAllResponseData;
+  data: FindAllEmployeesResponseData;
 }
 
-export interface FindAllResponseData {
+export interface FindAllEmployeesResponseData {
   operation: string;
   status: string;
   personas: Employee[];
@@ -33,18 +33,37 @@ export interface FindAllResponseData {
 
 export interface Employee {
  idUsuario: string;
- rutPersona: number;
+ rutPersona: number | undefined;
  nombrePersona: string;
  idEmpresa: string;
  fechaAlta: string;
  fechaBaja: string;
  fechaNacimiento: string;
  estadoPersona: string;
- puestoPersona: string;
+ puestoPersona: string | undefined;
  idRol: number;
  password: string;
 }
 
+export interface EmployeeRegisterRequest {
+  employees: Employee[];
+}
+
+export interface EmployeeRegisterResponse {
+  operation: string;
+  status: string;
+  personas: Employee[];
+}
+
+export interface Estado {
+  nombre: string;
+  id: string;
+}
+
+export interface Puesto {
+  nombre: string;
+  rol: string;
+}
 
 
 

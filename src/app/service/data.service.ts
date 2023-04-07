@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Employee, User} from "../model/user";
+import {Client} from "../model/cliente";
 
 // @ts-ignore
 @Injectable({
@@ -11,6 +12,7 @@ export class DataService {
 
   rutValido: boolean = false;
   listEmployees: Array<Employee> = new Array<Employee>();
+  listClients: Array<Client> = new Array<Client>();
 
 
   constructor(private http: HttpClient) {
@@ -41,6 +43,10 @@ export class DataService {
 
   getEmployees() {
     return this.listEmployees;
+  }
+
+  getClients() {
+    return this.listClients;
   }
 
 }
