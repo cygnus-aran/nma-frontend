@@ -32,21 +32,19 @@ export interface FindAllEmployeesResponseData {
 }
 
 export interface Employee {
- idUsuario: string;
- rutPersona: number | undefined;
+ idPersona: string;
+ runPersona: string;
  nombrePersona: string;
- idEmpresa: string;
  fechaAlta: string;
  fechaBaja: string;
- fechaNacimiento: string;
  estadoPersona: string;
- puestoPersona: string | undefined;
- idRol: number;
- password: string;
+ puestoPersona: string;
+ usuarioIdUsuario: number;
+ rolIdRol: string;
 }
 
 export interface EmployeeRegisterRequest {
-  employees: Employee[];
+  personas: Employee[];
 }
 
 export interface EmployeeRegisterResponse {

@@ -7,18 +7,19 @@ export interface FindAllClientsResponse {
 export interface FindAllClientsResponseData {
   operation: string;
   status: string;
-  personas: Client[];
+  cliente: Client[];
 }
 
 export interface Client {
   idEmpresa: number;
   nombreEmpresa: string;
-  direccionEmpresa: string;
+  rutEmpresa: string;
   fonoEmpresa: string;
   emailEmpresa: string;
   responsableEmpresa: string;
   estadoEmpresa: string;
-  usuariosIdUsuario: number;
+  usuarioIdUsuario: number;
+  rolIdRol: number;
 }
 
 export interface ClientRegisterRequest {

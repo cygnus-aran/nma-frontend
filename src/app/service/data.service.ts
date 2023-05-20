@@ -2,6 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Employee, User} from "../model/user";
 import {Client} from "../model/cliente";
+import {Visit} from "../model/visita";
+import {Contract} from "../model/contrato";
+import {Episode} from "../model/episode";
+import {Cap} from "../model/capacitaciones";
 
 // @ts-ignore
 @Injectable({
@@ -13,6 +17,22 @@ export class DataService {
   rutValido: boolean = false;
   listEmployees: Array<Employee> = new Array<Employee>();
   listClients: Array<Client> = new Array<Client>();
+  listVisits: Array<Visit> = new Array<Visit>();
+  listContracts: Array<Contract> = new Array<Contract>();
+  listEpisodes: Array<Episode> = new Array<Episode>();
+  listCaps: Array<Cap> = new Array<Cap>();
+
+  clienteObservado: Client = {
+    emailEmpresa: "",
+    estadoEmpresa: "",
+    fonoEmpresa: "",
+    idEmpresa: 0,
+    nombreEmpresa: "",
+    responsableEmpresa: "",
+    rolIdRol: 0,
+    rutEmpresa: "",
+    usuarioIdUsuario: 0
+  }
 
 
   constructor(private http: HttpClient) {

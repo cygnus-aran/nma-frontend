@@ -20,27 +20,26 @@ export class HomeComponent implements OnInit {
   cls: Array<Client> = new Array<Client>();
 
   empObs: Employee = {
+    usuarioIdUsuario: 0,
     estadoPersona: "",
     fechaAlta: "",
     fechaBaja: "",
-    fechaNacimiento: "",
-    idEmpresa: "",
-    idRol: 0,
-    idUsuario: "",
+    rolIdRol: "",
+    idPersona: "",
     nombrePersona: "",
-    password: "",
     puestoPersona: "",
-    rutPersona: undefined
+    runPersona: ""
   }
   clObs: Client = {
-    direccionEmpresa: "",
+    rolIdRol: 0,
+    rutEmpresa: "",
     emailEmpresa: "",
     estadoEmpresa: "",
     fonoEmpresa: "",
     idEmpresa: 0,
     nombreEmpresa: "",
     responsableEmpresa: "",
-    usuariosIdUsuario: 0
+    usuarioIdUsuario: 0
   }
 
   idcount: number = 0;
@@ -56,9 +55,9 @@ export class HomeComponent implements OnInit {
     {nombre: "Inactivo", id: "I"}
   ];
   listPuesto: Puesto[] = [
-    {nombre: "ADMINISTRADOR", rol: "1"},
-    {nombre: "VENDEDOR", rol: "2"},
-    {nombre: "OTRO", rol: "3"}
+    {nombre: "CLIENTE", rol: "1"},
+    {nombre: "ADMINISTRADOR", rol: "2"},
+    {nombre: "PROFESIONAL", rol: "3"}
   ];
 
 
@@ -77,9 +76,9 @@ export class HomeComponent implements OnInit {
 
   deleteUser(emp: Employee){
     let request: EmployeeRegisterRequest = {
-      employees: []
+      personas: []
     }
-    request.employees.push(emp);
+    request.personas.push(emp);
     this.api.deleteEmployee(request).subscribe({
       next: value => {
         this.snackBar.open(value.message, "OK!", {duration: 2000,
@@ -87,8 +86,11 @@ export class HomeComponent implements OnInit {
       }, error: err => {
         this.snackBar.open(err, "OK!", {duration: 2000,
           verticalPosition: 'bottom', horizontalPosition: 'center'})
+        this.listUsers();
+        this.listClients();
       }, complete: () => {
         this.listUsers();
+        this.listClients();
       }
     });
   }
@@ -97,11 +99,10 @@ export class HomeComponent implements OnInit {
     this.api.listEmployees().subscribe(data => {
       this.dataService.listEmployees = data.data.personas;
       this.emps = data.data.personas;
-      this.idcount =  Number(this.emps[this.emps.length - 1].idUsuario) + 1;
+      this.idcount =  Number(this.emps[this.emps.length - 1].idPersona) + 1;
       for (const emp of this.emps) {
         emp.fechaAlta = emp.fechaAlta.substring(0,10);
         emp.fechaBaja = emp.fechaBaja.substring(0,10);
-        emp.fechaNacimiento = emp.fechaNacimiento.substring(0,10);
       }
     });
   }
@@ -125,30 +126,47 @@ export class HomeComponent implements OnInit {
   }
 
   closeDialog() {
+    this.empObs = {
+      usuarioIdUsuario: 0,
+      estadoPersona: "",
+      fechaAlta: "",
+      fechaBaja: "",
+      rolIdRol: "",
+      idPersona: "",
+      nombrePersona: "",
+      puestoPersona: "",
+      runPersona: ""
+    };
+    this.clObs = {
+      rolIdRol: 0,
+      rutEmpresa: "",
+      emailEmpresa: "",
+      estadoEmpresa: "",
+      fonoEmpresa: "",
+      idEmpresa: 0,
+      nombreEmpresa: "",
+      responsableEmpresa: "",
+      usuarioIdUsuario: 0
+    }
     this.dialogObj?.close();
   }
 
-  asignarPuesto(idRol: number) {
-    this.empObs.puestoPersona = this.listPuesto.find(puesto => puesto.rol === idRol.toString())!.nombre;
-  }
-
   validarFormularioEmpleado(): boolean {
-    if (!this.empObs.rutPersona || !this.empObs.nombrePersona || !this.empObs.idEmpresa || !this.empObs.estadoPersona || !this.empObs.idRol) {
-      return false; // at least one required field is empty
+    if (!this.empObs.runPersona || !this.empObs.nombrePersona || !this.empObs.estadoPersona || !this.empObs.puestoPersona) {
+      return false;
     }
-    return true; // all required fields have a value
+    return true;
   }
 
   createUser() {
     let request: EmployeeRegisterRequest = {
-      employees: []
+      personas: []
     }
-    this.empObs.idUsuario = this.idcount.toString();
+    this.empObs.idPersona = this.idcount.toString();
     this.empObs.fechaAlta = Date.now().toString();
-    this.empObs.fechaNacimiento = Date.now().toString();
     this.empObs.fechaBaja = new Date().setFullYear(new Date().getFullYear() + 1).toString();
-    this.empObs.password = "1234";
-    request.employees.push(this.empObs);
+    this.empObs.rolIdRol = this.listPuesto.find(rol => rol.nombre == this.empObs.puestoPersona)!.rol;
+    request.personas.push(this.empObs);
     this.api.registerEmployee(request).subscribe({
       next: value => {
         this.snackBar.open(value.message, "OK!", {duration: 2000,
@@ -158,6 +176,31 @@ export class HomeComponent implements OnInit {
           verticalPosition: 'bottom', horizontalPosition: 'center'})
       }, complete: () => {
         this.listUsers();
+        this.listClients();
+        this.closeDialog();
+      }
+    });
+  }
+
+  createClient() {
+    let request: ClientRegisterRequest = {
+      clients: []
+    }
+    this.clObs.estadoEmpresa = 'A';
+    this.clObs.idEmpresa = this.dataService.listClients.length + 1;
+    this.clObs.rolIdRol = 4;
+    this.clObs.usuarioIdUsuario = Number(this.emps.find(emp => emp.nombrePersona == this.clObs.responsableEmpresa)!.rolIdRol);
+    request.clients.push(this.clObs);
+    this.api.registerClient(request).subscribe({
+      next: value => {
+        this.snackBar.open(value.message, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+      }, error: err => {
+        this.snackBar.open(err, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+      }, complete: () => {
+        this.listUsers();
+        this.listClients();
         this.closeDialog();
       }
     });
@@ -171,20 +214,39 @@ export class HomeComponent implements OnInit {
     this.api.deleteClient(request).subscribe({
       next: value => {
         this.snackBar.open(value.message, "OK!", {duration: 2000,
-          verticalPosition: 'bottom', horizontalPosition: 'center'})
+          verticalPosition: 'bottom', horizontalPosition: 'center'});
       }, error: err => {
         this.snackBar.open(err, "OK!", {duration: 2000,
-          verticalPosition: 'bottom', horizontalPosition: 'center'})
+          verticalPosition: 'bottom', horizontalPosition: 'center'});
+        this.listUsers();
+        this.listClients();
       }, complete: () => {
         this.listUsers();
+        this.listClients();
       }
     });
   }
 
   validarFormularioCliente(): boolean {
-    if (!this.clObs.nombreEmpresa || !this.clObs.direccionEmpresa || !this.clObs.fonoEmpresa || !this.clObs.emailEmpresa || !this.clObs.responsableEmpresa) {
+    if (!this.clObs.nombreEmpresa || !this.clObs.fonoEmpresa || !this.clObs.emailEmpresa || !this.clObs.responsableEmpresa) {
       return false;
     }
     return true;
+  }
+
+  limpiaRut(n: number) {
+    if(n == 1) {
+      this.empObs.runPersona = this.empObs.runPersona.replace(/[^0-9kK]/g, '');
+      this.empObs.runPersona = this.empObs.runPersona.toUpperCase();
+    } else {
+      this.clObs.rutEmpresa = this.clObs.rutEmpresa.replace(/[^0-9kK]/g, '');
+      this.clObs.rutEmpresa = this.clObs.rutEmpresa.toUpperCase();
+    }
+  }
+
+
+  goGestionUsuario(cl: Client) {
+    this.router.navigateByUrl('cliente');
+    this.dataService.clienteObservado = cl;
   }
 }

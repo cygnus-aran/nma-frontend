@@ -5,12 +5,15 @@
     <div class="logo">
       <img src="assets/images/logo-nma.gif" alt="Logo NMA" style="width: 96px; height: 42px"/>
     </div>
-    <div class="options">
+    <div class="options float-start">
       <a [routerLink]="['/home']" class="text-decoration-none">Inicio</a>
-      <div class="col-4">
-      </div>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1'" [routerLink]="['/home']" class="text-decoration-none">Usuarios</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1' || this.dataService.usuarioObservado.rol == '3'" [routerLink]="['/home']" class="text-decoration-none">Clientes</a>
+      <a [routerLink]="['/home']" class="text-decoration-none">Facturas</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/home']" class="text-decoration-none">Reportar Accidente</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/home']" class="text-decoration-none">Solicitar Asesoria</a>
     </div>
-    <div class="close-sesion">
+    <div class="close-sesion float-end">
       <button class="btn-close-sesion" (click)="logOut()">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M14.0625 1.90195C16.2774 3.48398 17.7188 6.07148 17.7188 9C17.7188 13.8094 13.8234 17.7082 9.01758 17.7188C4.21876 17.7293 0.288288 13.8164 0.281256 9.01406C0.277741 6.08555 1.71915 3.49102 3.93048 1.90547C4.3418 1.61367 4.91485 1.73672 5.16094 2.17617L5.71641 3.16406C5.92383 3.5332 5.8254 4.00078 5.48438 4.25391C4.0254 5.33672 3.09376 7.05234 3.09376 8.99648C3.09024 12.2414 5.7129 14.9062 9.00001 14.9062C12.2203 14.9062 14.9274 12.2977 14.9063 8.96133C14.8957 7.14023 14.0379 5.38242 12.5121 4.25039C12.1711 3.99727 12.0762 3.52969 12.2836 3.16406L12.8391 2.17617C13.0852 1.74023 13.6547 1.61016 14.0625 1.90195ZM10.4063 9.28125V0.84375C10.4063 0.376172 10.0301 0 9.56251 0H8.43751C7.96993 0 7.59376 0.376172 7.59376 0.84375V9.28125C7.59376 9.74883 7.96993 10.125 8.43751 10.125H9.56251C10.0301 10.125 10.4063 9.74883 10.4063 9.28125Z" fill="#FFFFFF"/>
@@ -22,7 +25,8 @@
     </div>
   </nav>
 </header>
-<div class="wrapper pt-3">
+<div class="wrapper pt-3" *ngIf="this.dataService.usuarioObservado.rol == '1'">
+<!--<div class="wrapper pt-3">-->
   <div class="row">
     <div class="col-6">
       <h1 class="left title pb-4">Consola de Administraci&oacute;n</h1>
@@ -50,7 +54,6 @@
             <th scope="col">Empleado</th>
             <th scope="col">Rut</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Empresa</th>
             <th scope="col">Fecha Alta</th>
             <th scope="col">Estado</th>
             <th scope="col">Puesto</th>
@@ -60,18 +63,14 @@
           </thead>
           <tbody class="admuser">
           <tr *ngFor="let employee of this.emps" class="back-tab-user">
-            <td id="{{employee.idUsuario}}a">{{employee.idUsuario}}</td>
-            <td id="{{employee.idUsuario}}b">{{employee.rutPersona}}</td>
-            <td id="{{employee.idUsuario}}c">{{employee.nombrePersona}}</td>
-            <td id="{{employee.idUsuario}}d">
-              <span *ngIf="employee.idEmpresa == '1'">NMA</span>
-              <span *ngIf="employee.idEmpresa != '1'">Cliente</span>
-            </td>
-            <td id="{{employee.idUsuario}}e">{{employee.fechaAlta}}</td>
-            <td id="{{employee.idUsuario}}h">{{employee.estadoPersona}}</td>
-            <td id="{{employee.idUsuario}}i">{{employee.puestoPersona}}</td>
-            <td id="{{employee.idUsuario}}j">{{employee.idRol}}</td>
-            <td id="{{employee.idUsuario}}l" (click)="deleteUser(employee)" style="cursor: pointer">
+            <td *ngIf="employee.estadoPersona === 'A'" id="{{employee.idPersona}}a">{{employee.idPersona}}</td>
+            <td *ngIf="employee.estadoPersona === 'A'" id="{{employee.idPersona}}b">{{employee.runPersona | rut}}</td>
+            <td *ngIf="employee.estadoPersona === 'A'" id="{{employee.idPersona}}c">{{employee.nombrePersona}}</td>
+            <td *ngIf="employee.estadoPersona === 'A'" id="{{employee.idPersona}}e">{{employee.fechaAlta}}</td>
+            <td *ngIf="employee.estadoPersona === 'A'" id="{{employee.idPersona}}h">{{employee.estadoPersona}}</td>
+            <td *ngIf="employee.estadoPersona === 'A'" id="{{employee.idPersona}}i">{{employee.puestoPersona}}</td>
+            <td *ngIf="employee.estadoPersona === 'A'" id="{{employee.idPersona}}j">{{employee.rolIdRol}}</td>
+            <td *ngIf="employee.estadoPersona === 'A'" id="{{employee.idPersona}}l" (click)="deleteUser(employee)" style="cursor: pointer">
               <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_78915_12021)">
                   <path d="M17.2241 9.78214C16.8749 9.78214 16.5918 10.0652 16.5918 10.4145V22.3652C16.5918 22.7142 16.8749 22.9976 17.2241 22.9976C17.5734 22.9976 17.8564 22.7142 17.8564 22.3652V10.4145C17.8564 10.0652 17.5734 9.78214 17.2241 9.78214Z" fill="#17B1E7"/>
@@ -105,7 +104,7 @@
           <tr class="bg-2 color-1">
             <th scope="col">Empresa</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Direcci&oacute;n</th>
+            <th scope="col">Rut</th>
             <th scope="col">Fono</th>
             <th scope="col">Email</th>
             <th scope="col">Responsable</th>
@@ -115,14 +114,14 @@
           </thead>
           <tbody class="admuser">
           <tr *ngFor="let cl of this.cls" class="back-tab-user">
-            <td id="{{cl.idEmpresa}}a">{{cl.idEmpresa}}</td>
-            <td id="{{cl.idEmpresa}}b">{{cl.nombreEmpresa}}</td>
-            <td id="{{cl.idEmpresa}}c">{{cl.direccionEmpresa}}</td>
-            <td id="{{cl.idEmpresa}}d">{{cl.fonoEmpresa}}</td>
-            <td id="{{cl.idEmpresa}}e">{{cl.emailEmpresa}}</td>
-            <td id="{{cl.idEmpresa}}h">{{cl.responsableEmpresa}}</td>
-            <td id="{{cl.idEmpresa}}i">{{cl.estadoEmpresa}}</td>
-            <td id="{{cl.idEmpresa}}l" (click)="deleteClient(cl)" style="cursor: pointer">
+            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}a">{{cl.idEmpresa}}</td>
+            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}b" (click)="goGestionUsuario(cl)" class="link-integrador">{{cl.nombreEmpresa}}</td>
+            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}b">{{cl.rutEmpresa | rut}}</td>
+            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}d">{{cl.fonoEmpresa}}</td>
+            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}e">{{cl.emailEmpresa}}</td>
+            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}h">{{cl.responsableEmpresa}}</td>
+            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}i">{{cl.estadoEmpresa}}</td>
+            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}l" (click)="deleteClient(cl)" style="cursor: pointer">
               <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_78915_12021)">
                   <path d="M17.2241 9.78214C16.8749 9.78214 16.5918 10.0652 16.5918 10.4145V22.3652C16.5918 22.7142 16.8749 22.9976 17.2241 22.9976C17.5734 22.9976 17.8564 22.7142 17.8564 22.3652V10.4145C17.8564 10.0652 17.5734 9.78214 17.2241 9.78214Z" fill="#17B1E7"/>
@@ -151,17 +150,11 @@
         <div class="col-12">
           <div class="form-group pb-5">
             <label for="re">Rut Empleado</label>
-            <input type="text" class="input-login" id="re" name="re" [(ngModel)]="empObs.rutPersona" placeholder="Sin punto ni guion"/>
+            <input type="text" class="input-login" id="re" name="re" [ngModel]="empObs.runPersona | rut" (ngModelChange)="empObs.runPersona=$event; this.limpiaRut(1);" placeholder="Sin punto ni guion"/>
           </div>
           <div class="form-group pb-5">
             <label for="ne">Nombre Empleado</label>
             <input type="text" class="input-login" id="ne" name="ne" [(ngModel)]="empObs.nombrePersona" placeholder=""/>
-          </div>
-          <div class="form-group pb-5">
-            <label for="ee">Empresa</label>
-            <select class="form-control input-login" id="ee" name="ee" [(ngModel)]="empObs.idEmpresa" style="appearance: menulist-button">
-              <option *ngFor="let empresa of this.listEmpresa" [value]="empresa.id">{{empresa.nombre}}</option>
-            </select>
           </div>
           <div class="form-group pb-5">
             <label for="ese">Estado</label>
@@ -171,8 +164,8 @@
           </div>
           <div class="form-group pb-5">
             <label for="pe">Puesto</label>
-            <select class="form-control input-login" id="pe" name="pe" [(ngModel)]="empObs.idRol" style="appearance: menulist-button" (change)="asignarPuesto(empObs.idRol)">
-              <option *ngFor="let puesto of this.listPuesto" [value]="puesto.rol">{{puesto.nombre}}</option>
+            <select class="form-control input-login" id="pe" name="pe" [(ngModel)]="empObs.puestoPersona" style="appearance: menulist-button" >
+              <option *ngFor="let puesto of this.listPuesto" [value]="puesto.nombre">{{puesto.nombre}}</option>
             </select>
           </div>
         </div>
@@ -195,15 +188,15 @@
         <div class="col-12">
           <div class="form-group pb-5">
             <label for="nem">Nombre Empresa</label>
-            <input type="text" class="input-login" id="nem" name="nem" [(ngModel)]="clObs.nombreEmpresa" placeholder="Sin punto ni guion"/>
+            <input type="text" class="input-login" id="nem" name="nem" [(ngModel)]="clObs.nombreEmpresa"/>
           </div>
           <div class="form-group pb-5">
-            <label for="de">Direcci&oacute;n Empresa</label>
-            <input type="text" class="input-login" id="de" name="de" [(ngModel)]="clObs.direccionEmpresa" placeholder=""/>
+            <label for="nem">Rut Empresa</label>
+            <input type="text" class="input-login" id="rel" name="rel" [ngModel]="clObs.rutEmpresa | rut" (ngModelChange)="clObs.rutEmpresa=$event; this.limpiaRut(2);" placeholder="Sin punto ni guion"/>
           </div>
           <div class="form-group pb-5">
             <label for="fe">Fono Empresa</label>
-            <input type="text" class="input-login" id="fe" name="fe" [(ngModel)]="clObs.fonoEmpresa" placeholder=""/>
+            <input type="text" class="input-login" id="fe" name="fe" [(ngModel)]="clObs.fonoEmpresa" placeholder="" maxlength="12"/>
           </div>
           <div class="form-group pb-5">
             <label for="eme">Email Empresa</label>
@@ -211,7 +204,12 @@
           </div>
           <div class="form-group pb-5">
             <label for="rem">Responsable Empresa</label>
-            <input type="text" class="input-login" id="rem" name="ren" [(ngModel)]="clObs.responsableEmpresa" placeholder=""/>
+            <select class="form-control input-login" id="rem" name="ren" [(ngModel)]="clObs.responsableEmpresa" style="appearance: menulist-button">
+              <ng-container *ngFor="let emp of emps">
+                <option [value]="emp.nombrePersona" *ngIf="emp.rolIdRol === '3'">{{ emp.nombrePersona }}</option>
+              </ng-container>
+            </select>
+
           </div>
         </div>
       </div>
@@ -220,7 +218,7 @@
           <button type="button" class="btn-outline-blue"  style="max-width: 208px" (click)="closeDialog()">Volver</button>
         </div>
         <div class="col-md-6 col-12 order-1 order-md-2">
-          <button type="button" class="btn-blue" style="max-width: 208px" [disabled]="!validarFormularioCliente()" (click)="createUser()">Crear Usuario</button>
+          <button type="button" class="btn-blue" style="max-width: 208px" [disabled]="!validarFormularioCliente()" (click)="createClient()">Crear Usuario</button>
         </div>
       </div>
     </div>

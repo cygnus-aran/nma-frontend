@@ -11,6 +11,10 @@ import {
 } from "../model/user";
 import {catchError, retry} from "rxjs";
 import {ClientRegisterRequest, ClientRegisterResponse, FindAllClientsResponse} from "../model/cliente";
+import {FindAllVisitsResponse} from "../model/visita";
+import {FindAllContractsResponse} from "../model/contrato";
+import {FindAllEpisodesResponse} from "../model/episode";
+import {FindAllCapsResponse} from "../model/capacitaciones";
 
 
 
@@ -37,17 +41,17 @@ export class RestService {
     }
 
     listEmployees(){
-      return this.http.get<FindAllEmployeesResponse>(this.URL_SERVICE + 'employee/find-all',
+      return this.http.get<FindAllEmployeesResponse>(this.URL_SERVICE + 'persona/find-all',
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
     }
 
     deleteEmployee(request: EmployeeRegisterRequest){
-      return this.http.post<EmployeeRegisterResponse>(this.URL_SERVICE + 'employee/delete-employee', request,
+      return this.http.post<EmployeeRegisterResponse>(this.URL_SERVICE + 'persona/delete-persona', request,
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
     }
 
     registerEmployee(request: EmployeeRegisterRequest){
-      return this.http.post<EmployeeRegisterResponse>(this.URL_SERVICE + 'employee/register-employee', request,
+      return this.http.post<EmployeeRegisterResponse>(this.URL_SERVICE + 'persona/register-persona', request,
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
     }
 
@@ -62,10 +66,28 @@ export class RestService {
     }
 
     registerClient(request: ClientRegisterRequest){
-      return this.http.post<ClientRegisterResponse>(this.URL_SERVICE + 'employee/register-client', request,
+      return this.http.post<ClientRegisterResponse>(this.URL_SERVICE + 'client/register-client', request,
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
     }
 
+    listVisits(){
+      return this.http.get<FindAllVisitsResponse>(this.URL_SERVICE + 'visita/find-all',
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
 
+    listContracts(){
+      return this.http.get<FindAllContractsResponse>(this.URL_SERVICE + 'contrato/find-all',
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    listEpisodes(){
+      return this.http.get<FindAllEpisodesResponse>(this.URL_SERVICE + 'formulario/find-all',
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    listCaps(){
+      return this.http.get<FindAllCapsResponse>(this.URL_SERVICE + 'servicio/find-all',
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
 
 }

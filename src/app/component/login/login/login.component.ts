@@ -38,10 +38,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   login() {
+    this.request.password = btoa(this.request.password);
+    console.log(this.request);
     this.api.login(this.request).subscribe({
       next: value => {
         if(value.code !== 202){
@@ -57,7 +58,9 @@ export class LoginComponent implements OnInit {
       }, error: err => {
         this.snackBar.open("Ha ocurrido un error inesperado", "OK!", {duration: 2000,
           verticalPosition: 'bottom', horizontalPosition: 'center'})
+        this.request.password = "";
       }, complete: () => {
+        this.request.password = "";
         this.loginService.setAuth(this.user.username);
         this.data.usuarioObservado = this.user;
         this.redirect();

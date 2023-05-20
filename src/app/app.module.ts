@@ -18,12 +18,16 @@ import {TypeaheadModule} from "ngx-bootstrap/typeahead";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {RutPipe} from "./pipes/rut.pipe";
+import { ClienteComponent } from './component/cliente/cliente.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    RutPipe,
+    ClienteComponent
   ],
   imports: [
     BrowserModule,
