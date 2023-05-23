@@ -112,6 +112,8 @@ export class HomeComponent implements OnInit {
       this.dataService.listClients = data.data.clientes;
       this.cls = data.data.clientes;
       this.idcountcl =  Number(this.cls[this.cls.length - 1].idEmpresa) + 1;
+      console.log(this.cls);
+      console.log(this.dataService.usuarioObservado.id);
     });
   }
 

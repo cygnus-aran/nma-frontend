@@ -58,6 +58,7 @@ export class DataService {
   }
 
   usuarioObservado: User = {
+    id: "",
     rol: "", username: ""
   }
 

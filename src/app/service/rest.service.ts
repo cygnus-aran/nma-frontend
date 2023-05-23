@@ -11,10 +11,10 @@ import {
 } from "../model/user";
 import {catchError, retry} from "rxjs";
 import {ClientRegisterRequest, ClientRegisterResponse, FindAllClientsResponse} from "../model/cliente";
-import {FindAllVisitsResponse} from "../model/visita";
+import {FindAllVisitsResponse, VisitRegisterRequest} from "../model/visita";
 import {FindAllContractsResponse} from "../model/contrato";
 import {FindAllEpisodesResponse} from "../model/episode";
-import {FindAllCapsResponse} from "../model/capacitaciones";
+import {CapRegisterRequest, FindAllCapsResponse} from "../model/capacitaciones";
 
 
 
@@ -87,6 +87,16 @@ export class RestService {
 
     listCaps(){
       return this.http.get<FindAllCapsResponse>(this.URL_SERVICE + 'servicio/find-all',
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    registerCap(request: CapRegisterRequest){
+      return this.http.post<FindAllCapsResponse>(this.URL_SERVICE + 'servicio/register-servicio', request,
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    registerVisit(request: VisitRegisterRequest){
+      return this.http.post<FindAllCapsResponse>(this.URL_SERVICE + 'visita/register-visita', request,
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
     }
 

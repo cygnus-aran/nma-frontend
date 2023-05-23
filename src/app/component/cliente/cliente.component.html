@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header" xmlns="http://www.w3.org/1999/html">
   <!-- NAVBAR -->
   <nav class="navbar">
     <!-- LOGO -->
@@ -6,10 +6,12 @@
       <img src="assets/images/logo-nma.gif" alt="Logo NMA" style="width: 96px; height: 42px"/>
     </div>
     <div class="options float-start">
-      <a [routerLink]="['/home']" class="text-decoration-none">Inicio</a>
-      <a [routerLink]="['/home']" class="text-decoration-none">Usuarios</a>
-      <a [routerLink]="['/home']" class="text-decoration-none">Clientes</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1'" [routerLink]="['/home']" class="text-decoration-none">Inicio</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1'" [routerLink]="['/home']" class="text-decoration-none">Usuarios</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1' || this.dataService.usuarioObservado.rol == '3'" [routerLink]="['/home']" class="text-decoration-none">Clientes</a>
       <a [routerLink]="['/home']" class="text-decoration-none">Facturas</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/home']" class="text-decoration-none">Reportar Accidente</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/home']" class="text-decoration-none">Solicitar Asesoria</a>
     </div>
     <div class="close-sesion right">
       <button class="btn-close-sesion" (click)="logOut()">
@@ -37,9 +39,9 @@
     <div class="col-4"></div>
     <div class="col-4">
       <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem; margin-bottom: 0.5rem;">Añadir Contrato</button>
-      <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem; margin-bottom: 0.5rem;">Añadir Visita</button>
+      <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem; margin-bottom: 0.5rem;" (click)="openModal(agendarVisita)">Agendar Visita</button>
       <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem; margin-bottom: 0.5rem;">Añadir Episodio</button>
-      <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem; margin-bottom: 0.5rem;">Añadir Capacitaci&oacute;n</button>
+      <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem; margin-bottom: 0.5rem;" (click)="openModal(agendarCapacitacion)">Agendar Capacitaci&oacute;n</button>
     </div>
   </div>
   <div class="row">
@@ -55,6 +57,7 @@
           <tr class="bg-2 color-1">
             <th scope="col">Visita</th>
             <th scope="col">Fecha Visita</th>
+            <th scope="col">Valor Visita</th>
             <th scope="col">Descripci&oacute;n</th>
             <th scope="col">Encargado</th>
             <th scope="col">Estado</th>
@@ -66,6 +69,7 @@
           <tr *ngFor="let vs of this.vsts" class="back-tab-user">
             <td *ngIf="vs.estado === 'A' && vs.idEmpresa == this.dataService.clienteObservado.idEmpresa.toString()" id="{{vs.idVisita}}a">{{vs.idVisita}}</td>
             <td *ngIf="vs.estado === 'A' && vs.idEmpresa == this.dataService.clienteObservado.idEmpresa.toString()" id="{{vs.idVisita}}b">{{vs.fechaVisita | date:"dd-MM-yyyy"}}</td>
+            <td *ngIf="vs.estado === 'A' && vs.idEmpresa == this.dataService.clienteObservado.idEmpresa.toString()" id="{{vs.idVisita}}b">{{vs.valor | currency:"CLP"}}</td>
             <td *ngIf="vs.estado === 'A' && vs.idEmpresa == this.dataService.clienteObservado.idEmpresa.toString()" id="{{vs.idVisita}}c">{{vs.descripcionVisita}}</td>
             <td *ngIf="vs.estado === 'A' && vs.idEmpresa == this.dataService.clienteObservado.idEmpresa.toString()" id="{{vs.idVisita}}d">{{vs.nombreProfesional}}</td>
             <td *ngIf="vs.estado === 'A' && vs.idEmpresa == this.dataService.clienteObservado.idEmpresa.toString()" id="{{vs.idVisita}}e">{{vs.estado}}</td>
@@ -207,20 +211,22 @@
             <th scope="col">Descripci&oacute;n</th>
             <th scope="col">Fecha Creaci&oacute;n</th>
             <th scope="col">Fecha Ejecuci&oacute;n</th>
+            <th scope="col">Estado Servicio</th>
             <th scope="col">Cliente</th>
             <th scope="col"></th>
           </tr>
           </thead>
           <tbody class="admuser">
           <tr *ngFor="let cap of this.caps" class="back-tab-user">
-            <td *ngIf="cap.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}a">{{cap.idServicio}}</td>
-            <td *ngIf="cap.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}b">{{cap.nombreServicio}}</td>
-            <td *ngIf="cap.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}c">{{cap.valorServicio | currency:"CLP"}}</td>
-            <td *ngIf="cap.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}d">{{cap.descripcionServicio}}</td>
-            <td *ngIf="cap.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}e">{{cap.fechaCreacionServicio | date:"dd-MM-yyyy"}}</td>
-            <td *ngIf="cap.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}f">{{cap.fechaBajaServicio | date: "dd-MM-yyyy"}}</td>
-            <td *ngIf="cap.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}g">{{cap.episodioIdEpisodio}}</td>
-            <td *ngIf="cap.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}h">
+            <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}a">{{cap.idServicio}}</td>
+            <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}b">{{cap.nombreServicio}}</td>
+            <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}c">{{cap.valorServicio | currency:"CLP"}}</td>
+            <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}d">{{cap.descripcionServicio}}</td>
+            <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}e">{{cap.fechaCreacionServicio | date:"dd-MM-yyyy"}}</td>
+            <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}f">{{cap.fechaBajaServicio | date: "dd-MM-yyyy"}}</td>
+            <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}g">{{cap.estadoServicio}}</td>
+            <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}i">{{cap.idCliente}}</td>
+            <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}h">
               <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_78915_12021)">
                   <path d="M17.2241 9.78214C16.8749 9.78214 16.5918 10.0652 16.5918 10.4145V22.3652C16.5918 22.7142 16.8749 22.9976 17.2241 22.9976C17.5734 22.9976 17.8564 22.7142 17.8564 22.3652V10.4145C17.8564 10.0652 17.5734 9.78214 17.2241 9.78214Z" fill="#17B1E7"/>
@@ -247,3 +253,108 @@
     </div>
   </div>
 </div>
+<ng-template #agendarCapacitacion>
+  <div class="modal-body" style="max-width: 600px; padding: 45px 45px 30px 45px; overflow-y: auto;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <p class="title left pb-3">Capacitacion #{{this.dataService.listCaps.length + 1}}<br>
+          Profesional Asignado: {{this.dataService.clienteObservado.responsableEmpresa}}
+          </p>
+          <mat-form-field class="left" style="width: 100%">
+            <mat-label>Fecha Capacitaci&oacute;n</mat-label>
+            <input matInput [matDatepicker]="dp3" [formControl]="feccap" [disabled]="true">
+            <mat-datepicker-toggle matIconSuffix [for]="dp3"></mat-datepicker-toggle>
+            <mat-datepicker #dp3 disabled="false" color="accent"></mat-datepicker>
+          </mat-form-field>
+          <div class="row">
+            <div class="col-6">
+              <p>Añadir Asistentes
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click)="agregarAsistente()" style="cursor: pointer;">
+                  <path d="M12 0.375C5.57812 0.375 0.375 5.57812 0.375 12C0.375 18.4219 5.57812 23.625 12 23.625C18.4219 23.625 23.625 18.4219 23.625 12C23.625 5.57812 18.4219 0.375 12 0.375ZM18.75 13.3125C18.75 13.6219 18.4969 13.875 18.1875 13.875H13.875V18.1875C13.875 18.4969 13.6219 18.75 13.3125 18.75H10.6875C10.3781 18.75 10.125 18.4969 10.125 18.1875V13.875H5.8125C5.50313 13.875 5.25 13.6219 5.25 13.3125V10.6875C5.25 10.3781 5.50313 10.125 5.8125 10.125H10.125V5.8125C10.125 5.50313 10.3781 5.25 10.6875 5.25H13.3125C13.6219 5.25 13.875 5.50313 13.875 5.8125V10.125H18.1875C18.4969 10.125 18.75 10.3781 18.75 10.6875V13.3125Z" fill="#17B1E7"/>
+                </svg>
+              </p>
+            </div>
+            <div class="col-6">
+              <p>Quitar Asistentes
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click)="asistentes.splice(asistentes.length - 1, 1)" style="cursor: pointer">
+                  <path d="M18 6L6 18" stroke="#17B1E7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M6 6L18 18" stroke="#17B1E7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </p>
+            </div>
+          </div>
+          <div class="form-group pb-5" style="max-height: 250px; overflow-y: auto">
+            <span *ngFor="let as of this.asistentes; index as i;">
+              <label for="as{{i}}">Asistente {{i + 1}}</label>
+              <div class="input-wrapper">
+                <input type="text" class="input-login mb-2" id="as{{i}}" name="as{{i}}" [(ngModel)]="asistentes[i].nombre"/>
+              </div>
+            </span>
+          </div>
+          <div class="form-group pb-5">
+            <label for="matu">Material</label>
+            <div class="input-wrapper">
+              <textarea class="input-login mb-2" id="matu" name="matu" style="height: 120px" [value]="materiales" (change)="updateMats($event)">{{materiales}}</textarea>
+            </div>
+          </div>
+          <div class="form-group pb-5">
+            <label for="val">Valor</label>
+            <div class="input-wrapper">
+              <input type="number" class="input-login mb-2" id="val" name="val" min="0" [(ngModel)]="cap.valorServicio" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-12 order-2 order-md-1">
+          <button type="button" class="btn-outline-blue"  style="max-width: 208px" (click)="closeDialog()">Volver</button>
+        </div>
+        <div class="col-md-6 col-12 order-1 order-md-2">
+          <button type="button" class="btn-blue" style="max-width: 208px" (click)="createCap()">Crear Capacitaci&oacute;n</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ng-template>
+<ng-template #agendarVisita>
+  <div class="modal-body" style="max-width: 600px; padding: 45px 45px 30px 45px; overflow-y: auto;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <p class="title left pb-3">Visita #{{this.dataService.listVisits.length + 1}}<br>
+          Profesional Asignado: {{this.dataService.clienteObservado.responsableEmpresa}}
+          </p>
+          <mat-form-field class="left" style="width: 100%">
+            <mat-label>Fecha Visita</mat-label>
+            <input matInput [matDatepicker]="dp3" [formControl]="fecvis" [disabled]="true">
+            <mat-datepicker-toggle matIconSuffix [for]="dp3"></mat-datepicker-toggle>
+            <mat-datepicker #dp3 disabled="false" color="accent"></mat-datepicker>
+          </mat-form-field>
+          <div class="form-group pb-5">
+            <label for="desc">Descripci&oacute;n Visita</label>
+            <div class="input-wrapper">
+              <textarea class="input-login mb-2" id="desc" name="desc" style="height: 120px" [value]="desc" (change)="updateDesc($event)">{{desc}}</textarea>
+            </div>
+          </div>
+          <div class="form-group pb-5">
+            <label for="val">Valor</label>
+            <div class="input-wrapper">
+              <input type="number" class="input-login mb-2" id="val2" name="val2" min="0" [(ngModel)]="vst.valor" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-12 order-2 order-md-1">
+          <button type="button" class="btn-outline-blue"  style="max-width: 208px" (click)="closeDialog()">Volver</button>
+        </div>
+        <div class="col-md-6 col-12 order-1 order-md-2">
+          <button type="button" class="btn-blue" style="max-width: 208px" (click)="createVisit()">Crear Visita</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ng-template>

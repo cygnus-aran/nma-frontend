@@ -915,5 +915,22 @@ input:checked + .slider:before {
   color: #002b49;
 }
 
+.input-container {
+  margin-bottom: 10px; /* Add spacing between inputs */
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  right: 10px; /* Adjust this value as per your preference */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 
 html, body { height: 100%; }

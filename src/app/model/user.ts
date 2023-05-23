@@ -1,6 +1,7 @@
 export interface User {
   username:  string;
   rol: string;
+  id: string;
 }
 
 export interface LoginRequest {
@@ -17,6 +18,7 @@ export interface LoginResponse {
 export interface LoginResponseData {
   message: string;
   rol: string;
+  idUsuario: string;
 }
 
 export interface FindAllEmployeesResponse {

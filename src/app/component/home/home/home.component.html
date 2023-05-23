@@ -25,8 +25,7 @@
     </div>
   </nav>
 </header>
-<div class="wrapper pt-3" *ngIf="this.dataService.usuarioObservado.rol == '1'">
-<!--<div class="wrapper pt-3">-->
+<div class="wrapper pt-3">
   <div class="row">
     <div class="col-6">
       <h1 class="left title pb-4">Consola de Administraci&oacute;n</h1>
@@ -36,16 +35,16 @@
   </div>
   <div class="row pt-3">
     <div class="col-12" style="padding-left: 10%; padding-right: 10%;">
-      <button class="btn-green-form shadow-none float-end" style="width: 205px;" (click)="openModal(crearEmpleado)" >Ingresar Empleado</button>
-      <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem" (click)="openModal(crearCliente)">Ingresar Cliente</button>
+      <button *ngIf="this.dataService.usuarioObservado.rol == '1'" class="btn-green-form shadow-none float-end" style="width: 205px;" (click)="openModal(crearEmpleado)" >Ingresar Empleado</button>
+      <button *ngIf="this.dataService.usuarioObservado.rol == '1' || this.dataService.usuarioObservado.rol == '3'" class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem" (click)="openModal(crearCliente)">Ingresar Cliente</button>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="this.dataService.usuarioObservado.rol == '1'" class="row">
     <div class="col-12">
       <h3 class="title-blue pb-2 pt-2">Control de Usuarios</h3>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="this.dataService.usuarioObservado.rol == '1'" class="row">
     <div class="col-12" style="padding-left: 10%; padding-right: 10%;">
       <div class="border-tabla mb-3">
         <table class="table text-center tabla-desktop-admuser mb-0 table-hover d-md-table d-none" style="text-align: center; border-radius: 10px" aria-describedby="tabla-integradores">
@@ -91,12 +90,12 @@
       </div>
     </div>
   </div>
-  <div class="row pt-3">
+  <div *ngIf="this.dataService.usuarioObservado.rol == '1' || this.dataService.usuarioObservado.rol == '3'" class="row pt-3">
     <div class="col-12">
       <h3 class="title-blue pb-2 pt-2">Control de Clientes</h3>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="this.dataService.usuarioObservado.rol == '1' || this.dataService.usuarioObservado.rol == '3'" class="row">
     <div class="col-12" style="padding-left: 10%; padding-right: 10%;">
       <div class="border-tabla mb-3">
         <table class="table text-center tabla-desktop-admuser mb-0 table-hover d-md-table d-none" style="text-align: center; border-radius: 10px" aria-describedby="tabla-integradores">
@@ -114,14 +113,14 @@
           </thead>
           <tbody class="admuser">
           <tr *ngFor="let cl of this.cls" class="back-tab-user">
-            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}a">{{cl.idEmpresa}}</td>
-            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}b" (click)="goGestionUsuario(cl)" class="link-integrador">{{cl.nombreEmpresa}}</td>
-            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}b">{{cl.rutEmpresa | rut}}</td>
-            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}d">{{cl.fonoEmpresa}}</td>
-            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}e">{{cl.emailEmpresa}}</td>
-            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}h">{{cl.responsableEmpresa}}</td>
-            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}i">{{cl.estadoEmpresa}}</td>
-            <td *ngIf="cl.estadoEmpresa === 'A'" id="{{cl.idEmpresa}}l" (click)="deleteClient(cl)" style="cursor: pointer">
+            <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}a">{{cl.idEmpresa}}</td>
+            <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}b" (click)="goGestionUsuario(cl)" class="link-integrador">{{cl.nombreEmpresa}}</td>
+            <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}b">{{cl.rutEmpresa | rut}}</td>
+            <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}d">{{cl.fonoEmpresa}}</td>
+            <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}e">{{cl.emailEmpresa}}</td>
+            <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}h">{{cl.responsableEmpresa}}</td>
+            <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}i">{{cl.estadoEmpresa}}</td>
+            <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}l" (click)="deleteClient(cl)" style="cursor: pointer">
               <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_78915_12021)">
                   <path d="M17.2241 9.78214C16.8749 9.78214 16.5918 10.0652 16.5918 10.4145V22.3652C16.5918 22.7142 16.8749 22.9976 17.2241 22.9976C17.5734 22.9976 17.8564 22.7142 17.8564 22.3652V10.4145C17.8564 10.0652 17.5734 9.78214 17.2241 9.78214Z" fill="#17B1E7"/>
@@ -209,7 +208,6 @@
                 <option [value]="emp.nombrePersona" *ngIf="emp.rolIdRol === '3'">{{ emp.nombrePersona }}</option>
               </ng-container>
             </select>
-
           </div>
         </div>
       </div>

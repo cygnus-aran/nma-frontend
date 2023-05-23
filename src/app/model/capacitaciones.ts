@@ -11,13 +11,22 @@ export interface FindAllCapsResponseData {
   servicios: Cap[];
 }
 
+export interface CapRegisterRequest {
+  servicios: Cap[];
+}
+
 export interface Cap {
   idServicio: number;
   nombreServicio: string;
   valorServicio: number;
   descripcionServicio?: string;
-  fechaCreacionServicio: string;
-  fechaBajaServicio?: string;
-  episodioIdEpisodio: string;
-  visitaIdVisita: string;
+  fechaCreacionServicio?: Date;
+  fechaBajaServicio?: Date;
+  idPersona: string;
+  idCliente: string;
+  estadoServicio: string;
+}
+
+export interface Asistente {
+  nombre: string;
 }

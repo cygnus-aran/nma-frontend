@@ -16,6 +16,7 @@ import {DataService} from "../../../service/data.service";
 export class LoginComponent implements OnInit {
 
   user: User = {
+    id: "",
     rol: "", username: ""
   }
   request: LoginRequest = {
@@ -54,6 +55,7 @@ export class LoginComponent implements OnInit {
           this.storage.setToken("value.access_token!");
           this.user.rol = value.data.rol;
           this.user.username = this.request.user;
+          this.user.id = value.data.idUsuario;
         }
       }, error: err => {
         this.snackBar.open("Ha ocurrido un error inesperado", "OK!", {duration: 2000,

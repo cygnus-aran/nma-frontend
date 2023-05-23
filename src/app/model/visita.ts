@@ -11,12 +11,17 @@ export interface FindAllVisitsResponseData {
   visits: Visit[];
 }
 
+export interface VisitRegisterRequest {
+  visits: Visit[];
+}
+
 export interface Visit {
   idVisita: number;
-  fechaVisita: Date;
+  fechaVisita: Date | undefined;
   descripcionVisita: string;
   nombreProfesional: string;
   estado: string;
   personaRunPersona: string;
   idEmpresa: string;
+  valor: string;
 }
