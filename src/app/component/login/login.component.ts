@@ -2,11 +2,11 @@ import {Component, OnInit, TemplateRef} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpParams} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {LoginRequest, User} from "../../../model/user";
-import {LoginService} from "../../../service/login.service";
-import {StorageService} from "../../../service/storage.service";
-import {RestService} from "../../../service/rest.service";
-import {DataService} from "../../../service/data.service";
+import {LoginRequest, User} from "../../model/user";
+import {LoginService} from "../../service/login.service";
+import {StorageService} from "../../service/storage.service";
+import {RestService} from "../../service/rest.service";
+import {DataService} from "../../service/data.service";
 
 @Component({
   selector: 'app-login',

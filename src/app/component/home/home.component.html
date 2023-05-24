@@ -3,14 +3,14 @@
   <nav class="navbar">
     <!-- LOGO -->
     <div class="logo">
-      <img src="assets/images/logo-nma.gif" alt="Logo NMA" style="width: 96px; height: 42px"/>
+      <img src="../../../assets/images/logo-nma.gif" alt="Logo NMA" style="width: 96px; height: 42px"/>
     </div>
     <div class="options float-start">
       <a [routerLink]="['/home']" class="text-decoration-none">Inicio</a>
       <a *ngIf="this.dataService.usuarioObservado.rol == '1'" [routerLink]="['/home']" class="text-decoration-none">Usuarios</a>
       <a *ngIf="this.dataService.usuarioObservado.rol == '1' || this.dataService.usuarioObservado.rol == '3'" [routerLink]="['/home']" class="text-decoration-none">Clientes</a>
       <a [routerLink]="['/home']" class="text-decoration-none">Facturas</a>
-      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/home']" class="text-decoration-none">Reportar Accidente</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/accidente']" class="text-decoration-none">Reportar Accidente</a>
       <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/home']" class="text-decoration-none">Solicitar Asesoria</a>
     </div>
     <div class="close-sesion float-end">

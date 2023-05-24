@@ -1,0 +1,166 @@
+<header class="header">
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <!-- LOGO -->
+    <div class="logo">
+      <img src="../../../assets/images/logo-nma.gif" alt="Logo NMA" style="width: 96px; height: 42px"/>
+    </div>
+    <div class="options float-start">
+      <a [routerLink]="['/home']" class="text-decoration-none">Inicio</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1'" [routerLink]="['/home']" class="text-decoration-none">Usuarios</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1' || this.dataService.usuarioObservado.rol == '3'" [routerLink]="['/home']" class="text-decoration-none">Clientes</a>
+      <a [routerLink]="['/home']" class="text-decoration-none">Facturas</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/accidente']" class="text-decoration-none">Reportar Accidente</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/home']" class="text-decoration-none">Solicitar Asesoria</a>
+    </div>
+    <div class="close-sesion float-end">
+      <button class="btn-close-sesion" (click)="logOut()">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.0625 1.90195C16.2774 3.48398 17.7188 6.07148 17.7188 9C17.7188 13.8094 13.8234 17.7082 9.01758 17.7188C4.21876 17.7293 0.288288 13.8164 0.281256 9.01406C0.277741 6.08555 1.71915 3.49102 3.93048 1.90547C4.3418 1.61367 4.91485 1.73672 5.16094 2.17617L5.71641 3.16406C5.92383 3.5332 5.8254 4.00078 5.48438 4.25391C4.0254 5.33672 3.09376 7.05234 3.09376 8.99648C3.09024 12.2414 5.7129 14.9062 9.00001 14.9062C12.2203 14.9062 14.9274 12.2977 14.9063 8.96133C14.8957 7.14023 14.0379 5.38242 12.5121 4.25039C12.1711 3.99727 12.0762 3.52969 12.2836 3.16406L12.8391 2.17617C13.0852 1.74023 13.6547 1.61016 14.0625 1.90195ZM10.4063 9.28125V0.84375C10.4063 0.376172 10.0301 0 9.56251 0H8.43751C7.96993 0 7.59376 0.376172 7.59376 0.84375V9.28125C7.59376 9.74883 7.96993 10.125 8.43751 10.125H9.56251C10.0301 10.125 10.4063 9.74883 10.4063 9.28125Z" fill="#FFFFFF"/>
+        </svg>
+        <span class="span-close">
+            <a href="#" class="text-decoration-none">Cerrar sesi&oacute;n</a>
+        </span>
+      </button>
+    </div>
+  </nav>
+</header>
+<div class="wrapper pt-3">
+  <div class="row">
+    <div class="col-6">
+      <h1 class="left title pb-4">Formulario de Registro Folio #{{this.dataService.listEpisodes.length + 1}}</h1>
+    </div>
+    <div class="col-6">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <p class="left subtitle2 pb-2">Datos del Trabajador</p>
+    </div>
+    <div class="col-6">
+    </div>
+    <hr>
+    <div class="col-4">
+      <div class="form-group pb-5">
+        <label for="name">Nombre Trabajador</label>
+        <input type="text" class="input-login" id="name" name="name" placeholder="Nombre"/>
+      </div>
+      <div class="form-group pb-5">
+        <label for="rut">Rut Trabajador</label>
+        <input type="text" class="input-login" id="rut" name="rut" placeholder="00.000.000-0"/>
+      </div>
+      <div class="form-group pb-5">
+        <label for="st">Sexo</label>
+        <select class="form-select" id="st" name="st">
+          <option *ngFor="let sx of this.listSexo" [value]="sx.sexo">{{sx.sexo}}</option>
+        </select>
+      </div>
+      <div class="form-group pb-5">
+        <label for="at">Antiguedad Trabajador</label>
+        <input type="text" class="input-login" id="at" name="at" placeholder="Años"/>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group pb-5">
+        <label for="apt">Apellido Paterno Trabajador</label>
+        <input type="text" class="input-login" id="apt" name="apt" placeholder="Apellido"/>
+      </div>
+      <div class="form-group pb-5">
+        <label for="pt">Profesi&oacute;n Trabajador</label>
+        <input type="text" class="input-login" id="pt" name="pt" placeholder="Profesion"/>
+      </div>
+      <div class="form-group pb-5">
+        <label for="ctt">Cargo Trabajador</label>
+        <input type="text" class="input-login" id="ctt" name="ctt" placeholder="Cargo"/>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group pb-5">
+        <label for="amt">Apellido Materno Trabajador</label>
+        <input type="text" class="input-login" id="amt" name="amt" placeholder="Apellido"/>
+      </div>
+      <div class="form-group pb-5">
+        <label for="et">Edad Trabajador</label>
+        <input type="text" class="input-login" id="et" name="et" placeholder="Edad"/>
+      </div>
+      <div class="form-group pb-5">
+        <label for="nj">Nombre Jefatura</label>
+        <input type="text" class="input-login" id="nj" name="nj" placeholder="Nombre y Apellido"/>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <p class="left subtitle2 pb-2">Datos del Accidente</p>
+    </div>
+    <div class="col-6">
+    </div>
+    <hr>
+    <div class="col-4">
+      <div class="form-group pb-5">
+        <label for="ua">Ubicaci&oacute;n Accidente</label>
+        <input type="text" class="input-login" id="ua" name="ua" placeholder="Direccion"/>
+      </div>
+      <mat-form-field class="left" style="width: 100%; margin-bottom: 20px">
+        <mat-label>Fecha Accidente</mat-label>
+        <input matInput [matDatepicker]="dp3" [formControl]="fecacc" [disabled]="true">
+        <mat-datepicker-toggle matIconSuffix [for]="dp3"></mat-datepicker-toggle>
+        <mat-datepicker #dp3 disabled="false" color="accent"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <div class="form-group pb-5">
+        <label for="aac">Area Aproximada Accidente</label>
+        <input type="text" class="input-login" id="aac" name="aac" placeholder="Primer Piso"/>
+      </div>
+      <timepicker [(ngModel)]="horacc" id="horacc"></timepicker>
+    </div>
+    <div class="col-4">
+      <div class="form-group pb-5">
+        <label for="uacc">Ubicaci&oacute;n Exacta Accidente</label>
+        <input type="text" class="input-login" id="uacc" name="uacc" placeholder="Cocina"/>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group pb-5">
+        <label for="ua">Descripci&oacute;n Breve del Accidente</label>
+        <div class="input-wrapper">
+          <textarea class="input-login mb-2" id="desc" name="desc" style="height: 120px" [value]="desc" (change)="updateDesc($event)">{{desc}}</textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <p class="left subtitle2 pb-2">Datos del Notificante</p>
+    </div>
+    <div class="col-6">
+    </div>
+    <hr>
+    <div class="col-4">
+      <div class="form-group pb-5">
+        <label for="nn">Nombre Notificante</label>
+        <input type="text" class="input-login" id="nn" name="nn" placeholder="Nombre y Apellido"/>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group pb-5">
+        <label for="cn">Cargo Notificante</label>
+        <input type="text" class="input-login" id="cn" name="cn" placeholder="Cargo"/>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group pb-5">
+        <label for="tn">Telefono Notificante</label>
+        <input type="text" class="input-login" id="tn" name="tn" placeholder="+56XXXXXXXXX"/>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-12">
+      <button class="btn-blue shadow-none disabled float-end" style="width: 205px; margin-top: 5%" disabled>Reportar Accidente</button>
+      <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-top: 5%" (click)="crearAccidente()">Reportar Accidente</button>
+      <button class="btn-outline-blue shadow-none float-end" style="width: 205px; margin-right: 0.5rem" (click)="goHome()">Volver</button>
+    </div>
+  </div>
+</div>

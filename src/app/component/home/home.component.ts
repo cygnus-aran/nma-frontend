@@ -1,13 +1,13 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {LoginService} from "../../../service/login.service";
-import {DataService} from "../../../service/data.service";
+import {LoginService} from "../../service/login.service";
+import {DataService} from "../../service/data.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {RestService} from "../../../service/rest.service";
-import {Employee, EmployeeRegisterRequest, Estado, Puesto} from "../../../model/user";
+import {RestService} from "../../service/rest.service";
+import {Employee, EmployeeRegisterRequest, Estado, Puesto} from "../../model/user";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {Empresa} from "../../../model/empresa";
-import {Client, ClientRegisterRequest} from "../../../model/cliente";
+import {Empresa} from "../../model/empresa";
+import {Client, ClientRegisterRequest} from "../../model/cliente";
 
 @Component({
   selector: 'app-home',

@@ -4,8 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './component/login/login/login.component';
-import { HomeComponent } from './component/home/home/home.component';
+import { LoginComponent } from './component/login/login.component';
+import { HomeComponent } from './component/home/home.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {RestService} from "./service/rest.service";
@@ -21,6 +21,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {RutPipe} from "./pipes/rut.pipe";
 import { ClienteComponent } from './component/cliente/cliente.component';
 import {MatInputModule} from "@angular/material/input";
+import { AccidenteComponent } from './component/accidente/accidente.component';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import {MatInputModule} from "@angular/material/input";
     LoginComponent,
     HomeComponent,
     RutPipe,
-    ClienteComponent
+    ClienteComponent,
+    AccidenteComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import {MatInputModule} from "@angular/material/input";
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TimepickerModule.forRoot()
   ],
   providers: [RestService, {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
   bootstrap: [AppComponent]

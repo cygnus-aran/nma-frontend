@@ -184,6 +184,12 @@ a {
   font-size: 24px;
   font-weight: 700;
 }
+.subtitle2 {
+  color: #17B1E7 !important;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: start;
+}
 .title .left {
   text-align: start;
   font-size: 24px;
