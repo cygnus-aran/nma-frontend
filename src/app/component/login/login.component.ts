@@ -17,7 +17,9 @@ export class LoginComponent implements OnInit {
 
   user: User = {
     id: "",
-    rol: "", username: ""
+    rol: "",
+    username: "",
+    idEmpresa: ""
   }
   request: LoginRequest = {
     user: "", password: ""
@@ -43,7 +45,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.request.password = btoa(this.request.password);
-    console.log(this.request);
     this.api.login(this.request).subscribe({
       next: value => {
         if(value.code !== 202){
@@ -56,6 +57,7 @@ export class LoginComponent implements OnInit {
           this.user.rol = value.data.rol;
           this.user.username = this.request.user;
           this.user.id = value.data.idUsuario;
+          this.user.idEmpresa = value.data.idEmpresa;
         }
       }, error: err => {
         this.snackBar.open("Ha ocurrido un error inesperado", "OK!", {duration: 2000,

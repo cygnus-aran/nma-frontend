@@ -43,49 +43,50 @@
     <div class="col-4">
       <div class="form-group pb-5">
         <label for="name">Nombre Trabajador</label>
-        <input type="text" class="input-login" id="name" name="name" placeholder="Nombre"/>
+        <input type="text" class="input-login" id="name" name="name" [(ngModel)]="acc.nombresTrabajador" (ngModelChange)="updateFormValidity()" placeholder="Nombre"/>
       </div>
       <div class="form-group pb-5">
         <label for="rut">Rut Trabajador</label>
-        <input type="text" class="input-login" id="rut" name="rut" placeholder="00.000.000-0"/>
+        <input type="text" class="input-login" id="rut" name="rut" [ngModel]="acc.rutTrabajador | rut" (ngModelChange)="acc.rutTrabajador=$event; this.limpiaRut(); updateFormValidity()" placeholder="00.000.000-0"
+               [ngClass]="{'invalid-input': !this.dataService.rutValido}" maxlength="12"/>
       </div>
       <div class="form-group pb-5">
         <label for="st">Sexo</label>
-        <select class="form-select" id="st" name="st">
+        <select class="form-select" id="st" name="st" [(ngModel)]="acc.sexo" (ngModelChange)="updateFormValidity()">
           <option *ngFor="let sx of this.listSexo" [value]="sx.sexo">{{sx.sexo}}</option>
         </select>
       </div>
       <div class="form-group pb-5">
         <label for="at">Antiguedad Trabajador</label>
-        <input type="text" class="input-login" id="at" name="at" placeholder="Años"/>
+        <input type="text" class="input-login" id="at" name="at" placeholder="Años" [(ngModel)]="acc.annoAntiguedad" (ngModelChange)="updateFormValidity()"/>
       </div>
     </div>
     <div class="col-4">
       <div class="form-group pb-5">
         <label for="apt">Apellido Paterno Trabajador</label>
-        <input type="text" class="input-login" id="apt" name="apt" placeholder="Apellido"/>
+        <input type="text" class="input-login" id="apt" name="apt" placeholder="Apellido" [(ngModel)]="acc.apellidoPaterno" (ngModelChange)="updateFormValidity()"/>
       </div>
       <div class="form-group pb-5">
         <label for="pt">Profesi&oacute;n Trabajador</label>
-        <input type="text" class="input-login" id="pt" name="pt" placeholder="Profesion"/>
+        <input type="text" class="input-login" id="pt" name="pt" placeholder="Profesion" [(ngModel)]="acc.profesion" (ngModelChange)="updateFormValidity()"/>
       </div>
       <div class="form-group pb-5">
         <label for="ctt">Cargo Trabajador</label>
-        <input type="text" class="input-login" id="ctt" name="ctt" placeholder="Cargo"/>
+        <input type="text" class="input-login" id="ctt" name="ctt" placeholder="Cargo" [(ngModel)]="acc.cargo" (ngModelChange)="updateFormValidity()"/>
       </div>
     </div>
     <div class="col-4">
       <div class="form-group pb-5">
         <label for="amt">Apellido Materno Trabajador</label>
-        <input type="text" class="input-login" id="amt" name="amt" placeholder="Apellido"/>
+        <input type="text" class="input-login" id="amt" name="amt" placeholder="Apellido" [(ngModel)]="acc.apellidoMaterno" (ngModelChange)="updateFormValidity()"/>
       </div>
       <div class="form-group pb-5">
         <label for="et">Edad Trabajador</label>
-        <input type="text" class="input-login" id="et" name="et" placeholder="Edad"/>
+        <input type="text" class="input-login" id="et" name="et" placeholder="Edad" [(ngModel)]="acc.edad" (ngModelChange)="updateFormValidity()"/>
       </div>
       <div class="form-group pb-5">
         <label for="nj">Nombre Jefatura</label>
-        <input type="text" class="input-login" id="nj" name="nj" placeholder="Nombre y Apellido"/>
+        <input type="text" class="input-login" id="nj" name="nj" placeholder="Nombre y Apellido" [(ngModel)]="acc.nombreJefatura" (ngModelChange)="updateFormValidity()"/>
       </div>
     </div>
   </div>
@@ -99,7 +100,19 @@
     <div class="col-4">
       <div class="form-group pb-5">
         <label for="ua">Ubicaci&oacute;n Accidente</label>
-        <input type="text" class="input-login" id="ua" name="ua" placeholder="Direccion"/>
+        <input type="text" class="input-login" id="ua" name="ua" placeholder="Direccion" [(ngModel)]="acc.ubicacionOFaena" (ngModelChange)="updateFormValidity()"/>
+      </div>
+      <div class="form-group pb-5">
+        <label for="rat">Region</label>
+        <select class="form-select" id="rat" name="rat" [(ngModel)]="acc.region" (ngModelChange)="updateFormValidity()">
+          <option *ngFor="let re of this.listRegion" [value]="re.nombre">{{re.nombre}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group pb-5">
+        <label for="aac">Area Aproximada Accidente</label>
+        <input type="text" class="input-login" id="aac" name="aac" placeholder="Primer Piso" [(ngModel)]="acc.area" (ngModelChange)="updateFormValidity()"/>
       </div>
       <mat-form-field class="left" style="width: 100%; margin-bottom: 20px">
         <mat-label>Fecha Accidente</mat-label>
@@ -110,16 +123,10 @@
     </div>
     <div class="col-4">
       <div class="form-group pb-5">
-        <label for="aac">Area Aproximada Accidente</label>
-        <input type="text" class="input-login" id="aac" name="aac" placeholder="Primer Piso"/>
+        <label for="uacc">Ubicaci&oacute;n Exacta Accidente</label>
+        <input type="text" class="input-login" id="uacc" name="uacc" placeholder="Cocina" [(ngModel)]="acc.ubicacionExacta" (ngModelChange)="updateFormValidity()"/>
       </div>
       <timepicker [(ngModel)]="horacc" id="horacc"></timepicker>
-    </div>
-    <div class="col-4">
-      <div class="form-group pb-5">
-        <label for="uacc">Ubicaci&oacute;n Exacta Accidente</label>
-        <input type="text" class="input-login" id="uacc" name="uacc" placeholder="Cocina"/>
-      </div>
     </div>
     <div class="col-12">
       <div class="form-group pb-5">
@@ -140,26 +147,25 @@
     <div class="col-4">
       <div class="form-group pb-5">
         <label for="nn">Nombre Notificante</label>
-        <input type="text" class="input-login" id="nn" name="nn" placeholder="Nombre y Apellido"/>
+        <input type="text" class="input-login" id="nn" name="nn" placeholder="Nombre y Apellido" [(ngModel)]="acc.elaboradorInforme" (ngModelChange)="updateFormValidity()"/>
       </div>
     </div>
     <div class="col-4">
       <div class="form-group pb-5">
         <label for="cn">Cargo Notificante</label>
-        <input type="text" class="input-login" id="cn" name="cn" placeholder="Cargo"/>
+        <input type="text" class="input-login" id="cn" name="cn" placeholder="Cargo" [(ngModel)]="acc.cargoElaboradorInforme" (ngModelChange)="updateFormValidity()"/>
       </div>
     </div>
     <div class="col-4">
       <div class="form-group pb-5">
         <label for="tn">Telefono Notificante</label>
-        <input type="text" class="input-login" id="tn" name="tn" placeholder="+56XXXXXXXXX"/>
+        <input type="text" class="input-login" id="tn" name="tn" placeholder="+56XXXXXXXXX" maxlength="12" [(ngModel)]="acc.telefonoElaboradorInforme" (ngModelChange)="updateFormValidity()"/>
       </div>
     </div>
   </div>
   <div class="row pt-5">
     <div class="col-12">
-      <button class="btn-blue shadow-none disabled float-end" style="width: 205px; margin-top: 5%" disabled>Reportar Accidente</button>
-      <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-top: 5%" (click)="crearAccidente()">Reportar Accidente</button>
+      <button class="btn-blue shadow-none float-end" style="width: 205px; margin-top: 5%" (click)="crearAccidente()" [disabled]="!isFormValid">Reportar Accidente</button>
       <button class="btn-outline-blue shadow-none float-end" style="width: 205px; margin-right: 0.5rem" (click)="goHome()">Volver</button>
     </div>
   </div>

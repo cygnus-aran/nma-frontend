@@ -4,8 +4,8 @@ import {Employee, User} from "../model/user";
 import {Client} from "../model/cliente";
 import {Visit} from "../model/visita";
 import {Contract} from "../model/contrato";
-import {Episode} from "../model/episode";
 import {Cap} from "../model/capacitaciones";
+import {Formulario} from "../model/accidente";
 
 // @ts-ignore
 @Injectable({
@@ -19,7 +19,7 @@ export class DataService {
   listClients: Array<Client> = new Array<Client>();
   listVisits: Array<Visit> = new Array<Visit>();
   listContracts: Array<Contract> = new Array<Contract>();
-  listEpisodes: Array<Episode> = new Array<Episode>();
+  listEpisodes: Array<Formulario> = new Array<Formulario>();
   listCaps: Array<Cap> = new Array<Cap>();
 
   clienteObservado: Client = {
@@ -59,7 +59,9 @@ export class DataService {
 
   usuarioObservado: User = {
     id: "",
-    rol: "", username: ""
+    rol: "",
+    username: "",
+    idEmpresa: ""
   }
 
   getEmployees() {

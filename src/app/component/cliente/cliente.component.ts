@@ -7,9 +7,9 @@ import {RestService} from "../../service/rest.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Visit, VisitRegisterRequest} from "../../model/visita";
 import {Contract} from "../../model/contrato";
-import {Episode} from "../../model/episode";
 import {Asistente, Cap, CapRegisterRequest} from "../../model/capacitaciones";
 import {FormControl} from "@angular/forms";
+import {Formulario} from "../../model/accidente";
 
 @Component({
   selector: 'app-cliente',
@@ -20,7 +20,7 @@ export class ClienteComponent implements OnInit{
 
   vsts: Array<Visit> = new Array<Visit>();
   cnts: Array<Contract> = new Array<Contract>();
-  eps: Array<Episode> = new Array<Episode>();
+  eps: Array<Formulario> = new Array<Formulario>();
   caps: Array<Cap> = new Array<Cap>();
   idCliente: number = 0;
   cap: Cap = {

@@ -2,6 +2,7 @@ export interface User {
   username:  string;
   rol: string;
   id: string;
+  idEmpresa: string;
 }
 
 export interface LoginRequest {

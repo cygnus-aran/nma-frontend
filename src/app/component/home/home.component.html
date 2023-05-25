@@ -141,6 +141,44 @@
       </div>
     </div>
   </div>
+  <div *ngIf="this.dataService.usuarioObservado.rol == '2'" class="row">
+    <div class="col-12">
+      <h4 class="title-blue pb-2 pt-2">Accidentes Reportados</h4>
+    </div>
+  </div>
+  <div *ngIf="this.dataService.usuarioObservado.rol == '2'" class="row">
+    <div class="col-12" style="padding-left: 10%; padding-right: 10%;">
+      <div class="border-tabla mb-3">
+        <table class="table text-center tabla-desktop-admuser mb-0 table-hover d-md-table d-none" style="text-align: center; border-radius: 10px" aria-describedby="tabla-integradores">
+          <thead>
+          <tr class="bg-2 color-1">
+            <th scope="col">Folio</th>
+            <th scope="col">Fecha Accidente</th>
+            <th scope="col">Region</th>
+            <th scope="col">Accion Insegura</th>
+            <th scope="col">Condicion Insegura</th>
+            <th scope="col">Fecha Informe</th>
+            <th scope="col">Fecha Revision</th>
+            <th scope="col">Cliente</th>
+          </tr>
+          </thead>
+          <tbody class="admuser">
+          <tr *ngFor="let ep of this.eps" class="back-tab-user">
+            <td *ngIf="ep.idCliente == this.dataService.usuarioObservado.idEmpresa" id="{{ep.folio}}a">{{ep.folio}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.usuarioObservado.idEmpresa" id="{{ep.folio}}b">{{ep.fechaEpisodio | date:"dd-MM-yyyy"}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.usuarioObservado.idEmpresa" id="{{ep.folio}}c">{{ep.region}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.usuarioObservado.idEmpresa" id="{{ep.folio}}d">{{ep.accionInsegura}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.usuarioObservado.idEmpresa" id="{{ep.folio}}e">{{ep.condicionInsegura}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.usuarioObservado.idEmpresa" id="{{ep.folio}}f">{{ep.fechaEpisodio | date:"dd-MM-yyyy" }}</td>
+            <td *ngIf="ep.idCliente == this.dataService.usuarioObservado.idEmpresa" id="{{ep.folio}}g">{{ep.fechaRevision | date:"dd-MM-yyyy"}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.usuarioObservado.idEmpresa" id="{{ep.folio}}g">{{ep.idCliente}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 </div>
 <ng-template #crearEmpleado>
   <div class="modal-body" style="max-width: 600px; padding: 45px 45px 30px 45px;">

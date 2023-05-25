@@ -8,6 +8,7 @@ import {Employee, EmployeeRegisterRequest, Estado, Puesto} from "../../model/use
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Empresa} from "../../model/empresa";
 import {Client, ClientRegisterRequest} from "../../model/cliente";
+import {Formulario} from "../../model/accidente";
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit {
 
   emps: Array<Employee> = new Array<Employee>();
   cls: Array<Client> = new Array<Client>();
+  eps: Array<Formulario> = new Array<Formulario>();
 
   empObs: Employee = {
     usuarioIdUsuario: 0,
@@ -67,6 +69,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.listUsers();
     this.listClients();
+    this.listEpisodes();
   }
 
   logOut(){
@@ -112,8 +115,15 @@ export class HomeComponent implements OnInit {
       this.dataService.listClients = data.data.clientes;
       this.cls = data.data.clientes;
       this.idcountcl =  Number(this.cls[this.cls.length - 1].idEmpresa) + 1;
-      console.log(this.cls);
-      console.log(this.dataService.usuarioObservado.id);
+    });
+  }
+
+  listEpisodes(){
+    this.api.listEpisodes().subscribe(data => {
+      this.dataService.listEpisodes = data.data.formularios;
+      this.eps = data.data.formularios;
+      // console.log(this.eps[0].idCliente);
+      console.log(this.dataService.usuarioObservado.idEmpresa);
     });
   }
 

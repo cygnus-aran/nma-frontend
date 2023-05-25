@@ -15,6 +15,7 @@ import {FindAllVisitsResponse, VisitRegisterRequest} from "../model/visita";
 import {FindAllContractsResponse} from "../model/contrato";
 import {FindAllEpisodesResponse} from "../model/episode";
 import {CapRegisterRequest, FindAllCapsResponse} from "../model/capacitaciones";
+import {FormularioRegisterRequest} from "../model/accidente";
 
 
 
@@ -97,6 +98,11 @@ export class RestService {
 
     registerVisit(request: VisitRegisterRequest){
       return this.http.post<FindAllCapsResponse>(this.URL_SERVICE + 'visita/register-visita', request,
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    registerForm(request: FormularioRegisterRequest){
+      return this.http.post<FindAllEpisodesResponse>(this.URL_SERVICE + 'formulario/register-formulario', request,
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
     }
 

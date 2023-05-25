@@ -46,3 +46,7 @@
   padding-top: 1px;
   padding-bottom: 1px;
 }
+
+.invalid-input {
+  outline: 2px solid rgba(255, 0, 0, 0.5);
+}

@@ -142,7 +142,7 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <h4 class="title-blue pb-2 pt-2">Episodios</h4>
+      <h4 class="title-blue pb-2 pt-2">Accidentes Reportados</h4>
     </div>
   </div>
   <div class="row">
@@ -164,15 +164,15 @@
           </thead>
           <tbody class="admuser">
           <tr *ngFor="let ep of this.eps" class="back-tab-user">
-            <td *ngIf="ep.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}a">{{ep.folio}}</td>
-            <td *ngIf="ep.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}b">{{ep.fechaEpisodio | date:"dd-MM-yyyy"}}</td>
-            <td *ngIf="ep.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}c">{{ep.region}}</td>
-            <td *ngIf="ep.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}d">{{ep.accionInsegura}}</td>
-            <td *ngIf="ep.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}e">{{ep.condicionInsegura}}</td>
-            <td *ngIf="ep.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}f">{{ep.fechaInforme | date:"dd-MM-yyyy" }}</td>
-            <td *ngIf="ep.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}g">{{ep.fechaRevision | date:"dd-MM-yyyy"}}</td>
-            <td *ngIf="ep.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}g">{{ep.episodioIdEpisodio}}</td>
-            <td *ngIf="ep.episodioIdEpisodio == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}h">
+            <td *ngIf="ep.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}a">{{ep.folio}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}b">{{ep.fechaEpisodio | date:"dd-MM-yyyy"}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}c">{{ep.region}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}d">{{ep.accionInsegura}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}e">{{ep.condicionInsegura}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}f">{{ep.fechaEpisodio | date:"dd-MM-yyyy" }}</td>
+            <td *ngIf="ep.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}g">{{ep.fechaRevision | date:"dd-MM-yyyy"}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}g">{{ep.idCliente}}</td>
+            <td *ngIf="ep.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ep.folio}}h">
               <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_78915_12021)">
                   <path d="M17.2241 9.78214C16.8749 9.78214 16.5918 10.0652 16.5918 10.4145V22.3652C16.5918 22.7142 16.8749 22.9976 17.2241 22.9976C17.5734 22.9976 17.8564 22.7142 17.8564 22.3652V10.4145C17.8564 10.0652 17.5734 9.78214 17.2241 9.78214Z" fill="#17B1E7"/>
