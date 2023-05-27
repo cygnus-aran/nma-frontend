@@ -19,13 +19,12 @@
           <path d="M14.0625 1.90195C16.2774 3.48398 17.7188 6.07148 17.7188 9C17.7188 13.8094 13.8234 17.7082 9.01758 17.7188C4.21876 17.7293 0.288288 13.8164 0.281256 9.01406C0.277741 6.08555 1.71915 3.49102 3.93048 1.90547C4.3418 1.61367 4.91485 1.73672 5.16094 2.17617L5.71641 3.16406C5.92383 3.5332 5.8254 4.00078 5.48438 4.25391C4.0254 5.33672 3.09376 7.05234 3.09376 8.99648C3.09024 12.2414 5.7129 14.9062 9.00001 14.9062C12.2203 14.9062 14.9274 12.2977 14.9063 8.96133C14.8957 7.14023 14.0379 5.38242 12.5121 4.25039C12.1711 3.99727 12.0762 3.52969 12.2836 3.16406L12.8391 2.17617C13.0852 1.74023 13.6547 1.61016 14.0625 1.90195ZM10.4063 9.28125V0.84375C10.4063 0.376172 10.0301 0 9.56251 0H8.43751C7.96993 0 7.59376 0.376172 7.59376 0.84375V9.28125C7.59376 9.74883 7.96993 10.125 8.43751 10.125H9.56251C10.0301 10.125 10.4063 9.74883 10.4063 9.28125Z" fill="#FFFFFF"/>
         </svg>
         <span class="span-close">
-                    <a href="#" class="text-decoration-none">Cerrar sesi&oacute;n</a>
-                </span>
+            <a href="#" class="text-decoration-none">Cerrar sesi&oacute;n</a>
+        </span>
       </button>
     </div>
   </nav>
 </header>
-
 <div class="wrapper pt-3">
   <div class="row">
     <div class="col-6">
@@ -40,7 +39,6 @@
     <div class="col-4">
       <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem; margin-bottom: 0.5rem;">Añadir Contrato</button>
       <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem; margin-bottom: 0.5rem;" (click)="openModal(agendarVisita)">Agendar Visita</button>
-      <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem; margin-bottom: 0.5rem;">Añadir Episodio</button>
       <button class="btn-green-form shadow-none float-end" style="width: 205px; margin-right: 0.5rem; margin-bottom: 0.5rem;" (click)="openModal(agendarCapacitacion)">Agendar Capacitaci&oacute;n</button>
     </div>
   </div>
@@ -62,6 +60,7 @@
             <th scope="col">Encargado</th>
             <th scope="col">Estado</th>
             <th scope="col">Cliente</th>
+            <th scope="col">Checklist</th>
             <th scope="col"></th>
           </tr>
           </thead>
@@ -74,6 +73,49 @@
             <td *ngIf="vs.estado === 'A' && vs.idEmpresa == this.dataService.clienteObservado.idEmpresa.toString()" id="{{vs.idVisita}}d">{{vs.nombreProfesional}}</td>
             <td *ngIf="vs.estado === 'A' && vs.idEmpresa == this.dataService.clienteObservado.idEmpresa.toString()" id="{{vs.idVisita}}e">{{vs.estado}}</td>
             <td *ngIf="vs.estado === 'A' && vs.idEmpresa == this.dataService.clienteObservado.idEmpresa.toString()" id="{{vs.idVisita}}f">{{vs.idEmpresa}}</td>
+            <td *ngIf="vs.estado === 'A' && vs.idEmpresa == this.dataService.clienteObservado.idEmpresa.toString()" id="{{vs.idVisita}}h">
+              <svg fill="#17B1E7" height="27" width="27" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="cursor:pointer;" (click)="openModal(crearChecklist); selectVisita(vs)">
+                <g>
+                  <g>
+                    <path d="M79.428,34.643H22.737C10.179,34.643,0,44.822,0,57.379v56.692c0,12.557,10.179,22.737,22.737,22.737h56.692
+                      c12.557,0,22.737-10.179,22.737-22.737V57.379C102.165,44.822,91.986,34.643,79.428,34.643z M80.016,113.337l-57.313-0.033V56.611
+                      l0.621-0.033l56.725,0.033L80.016,113.337z"/>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <path d="M500.648,68.698h-340.55c-6.275,0-11.352,5.077-11.352,11.352c0,6.274,5.077,11.352,11.352,11.352h340.55
+                      c6.274,0,11.352-5.077,11.352-11.352C512,73.775,506.923,68.698,500.648,68.698z"/>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <path d="M79.428,204.918H22.737C10.179,204.918,0,215.097,0,227.654v56.692c0,12.557,10.179,22.737,22.737,22.737h56.692
+                      c12.557,0,22.737-10.179,22.737-22.737v-56.692C102.165,215.097,91.986,204.918,79.428,204.918z M80.016,283.612l-57.313-0.033
+                      v-56.692l0.621-0.033l56.725,0.033L80.016,283.612z"/>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <path d="M500.648,238.973h-340.55c-6.275,0-11.352,5.077-11.352,11.352s5.077,11.352,11.352,11.352h340.55
+                      c6.274,0,11.352-5.077,11.352-11.352S506.923,238.973,500.648,238.973z"/>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <path d="M79.428,375.192H22.737C10.179,375.192,0,385.372,0,397.929v56.692c0,12.557,10.179,22.737,22.737,22.737h56.692
+                      c12.557,0,22.737-10.179,22.737-22.737v-56.692C102.165,385.372,91.986,375.192,79.428,375.192z M80.016,453.886l-57.313-0.033
+                      v-56.692l0.621-0.033l56.725,0.033L80.016,453.886z"/>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <path d="M500.648,409.247h-340.55c-6.275,0-11.352,5.077-11.352,11.352s5.077,11.352,11.352,11.352h340.55
+                      c6.274,0,11.352-5.077,11.352-11.352S506.923,409.247,500.648,409.247z"/>
+                  </g>
+                </g>
+              </svg>
+            </td>
             <td *ngIf="vs.estado === 'A' && vs.idEmpresa == this.dataService.clienteObservado.idEmpresa.toString()" id="{{vs.idVisita}}g">
               <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_78915_12021)">
@@ -354,7 +396,75 @@
           <button type="button" class="btn-blue" style="max-width: 208px" (click)="createVisit()">Crear Visita</button>
         </div>
       </div>
-
     </div>
   </div>
 </ng-template>
+<ng-template #crearChecklist>
+  <div class="modal-body" style="max-width: 600px; padding: 45px 45px 30px 45px; overflow-y: auto;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="list justify-content-center">
+            <h2>Checklist Visita #{{this.vst.idVisita}}
+              <svg height="27" width="27" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                   viewBox="0 0 370.32 370.32" xml:space="preserve" (click)="exportChecklist(this.chks)" style="cursor: pointer; alignment: right">
+<g>
+	<path style="fill:#ffffff;" d="M148.879,85.993H95.135c-8.284,0-15,6.716-15,15c0,8.284,6.716,15,15,15h53.744
+		c8.284,0,15-6.716,15-15C163.879,92.709,157.163,85.993,148.879,85.993z"/>
+  <path style="fill:#ffffff;" d="M148.879,148.327H95.135c-8.284,0-15,6.716-15,15c0,8.284,6.716,15,15,15h53.744
+		c8.284,0,15-6.716,15-15C163.879,155.043,157.163,148.327,148.879,148.327z"/>
+  <path style="fill:#ffffff;" d="M211.944,253.354v14.608h7.717c9.359,0,9.359-5.599,9.359-7.439c0-1.775,0-7.17-9.359-7.17H211.944z
+		"/>
+  <path style="fill:#ffffff;" d="M325.879,225.752h-24.41V73.703c0-3.934-1.56-7.705-4.344-10.484l-58.876-58.88
+		C235.465,1.561,231.699,0,227.765,0H50.58C34.527,0,21.469,13.059,21.469,29.112v312.095c0,16.054,13.059,29.113,29.111,29.113
+		h221.777c16.052,0,29.111-13.06,29.111-29.113v-30.048h24.41c12.687,0,22.973-10.285,22.973-22.973v-39.462
+		C348.852,236.038,338.566,225.752,325.879,225.752z M269.855,337.906H53.082V32.414H207.17V75.99
+		c0,10.555,8.554,19.107,19.105,19.107h43.58v130.655h-74.178c-12.688,0-22.973,10.286-22.973,22.973v39.462
+		c0,12.688,10.285,22.973,22.973,22.973h74.178V337.906z M238.51,260.523c0,10.441-7.224,16.928-18.85,16.928h-7.717v8.977
+		c0,2.316-1.877,4.197-4.195,4.197h-1.097c-2.319,0-4.197-1.881-4.197-4.197v-38.366c0-2.316,1.878-4.197,4.197-4.197h13.009
+		C231.287,243.864,238.51,250.246,238.51,260.523z M262.305,290.625H247.21c-2.319,0-4.197-1.881-4.197-4.197v-38.366
+		c0-2.316,1.877-4.197,4.197-4.197h15.095c13.148,0,23.845,10.5,23.845,23.409C286.15,280.15,275.454,290.625,262.305,290.625z
+		 M322.455,249.156c0,2.32-1.878,4.197-4.197,4.197h-17.045v10.053h14.521c2.317,0,4.197,1.875,4.197,4.195v1.099
+		c0,2.316-1.88,4.197-4.197,4.197h-14.521v13.53c0,2.316-1.877,4.197-4.196,4.197h-1.096c-2.32,0-4.197-1.881-4.197-4.197v-38.366
+		c0-2.316,1.877-4.197,4.197-4.197h22.337c2.319,0,4.197,1.881,4.197,4.197V249.156z"/>
+  <path style="fill:#ffffff;" d="M262.305,253.354h-9.803v27.782h9.803c7.915,0,14.355-6.222,14.355-13.862
+		C276.661,259.598,270.221,253.354,262.305,253.354z"/>
+</g>
+</svg>
+            </h2>
+            <ul style="max-height: 350px; overflow-y: auto">
+              <li *ngFor="let item of this.chks; let i = index">
+                <label>
+                  <input type="checkbox">
+                    <p style="margin-top: 16px" [ngClass]="{'checked': item.estadoChecklist ==='A'}">{{ item.nombreChecklist }}</p>
+                    <span></span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click)="removeChecklist(i)" style="cursor: pointer">
+                      <path d="M18 6L6 18" stroke="#17B1E7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M6 6L18 18" stroke="#17B1E7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </label>
+              </li>
+            </ul>
+            <form>
+              <div class="form-group pb-5">
+                <div class="input-wrapper" style="padding-left: 1rem; padding-right: 1rem;">
+                  <input type="text" class="input-login mb-2" placeholder="Nuevo item" name="newItem" [(ngModel)]="newChecklistItem">
+                </div>
+              </div>
+              <button type="button" class="btn-green shadow-none mb-2" (click)="this.addChecklist()">Agregar Item</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-md-6 col-12 order-2 order-md-1">
+          <button type="button" class="btn-outline-blue"  style="max-width: 208px" (click)="closeDialog(); emptyChecklist()">Volver</button>
+        </div>
+        <div class="col-md-6 col-12 order-1 order-md-2">
+          <button type="button" class="btn-blue" style="max-width: 208px" (click)="saveChecklist();" >Crear Checklist</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+

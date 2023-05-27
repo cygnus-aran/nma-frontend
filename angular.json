@@ -22,7 +22,12 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/roboto-fontface/fonts",
+                "output": "/assets/fonts/"
+              }
             ],
             "styles": [
               "src/custom-theme.scss",

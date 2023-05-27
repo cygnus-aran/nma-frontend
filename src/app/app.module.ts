@@ -24,6 +24,7 @@ import {MatInputModule} from "@angular/material/input";
 import { AccidenteComponent } from './component/accidente/accidente.component';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {LoginService} from "../../service/login.service";
 import {DataService} from "../../service/data.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -10,7 +10,9 @@ import {Contract} from "../../model/contrato";
 import {Asistente, Cap, CapRegisterRequest} from "../../model/capacitaciones";
 import {FormControl} from "@angular/forms";
 import {Formulario} from "../../model/accidente";
-
+import {Checklist, ChecklistRegisterRequest} from "../../model/checklist";
+const pdfMake = require('pdfmake/build/pdfmake.js');
+const pdfFonts = require("pdfmake/build/vfs_fonts")
 @Component({
   selector: 'app-cliente',
   templateUrl: './cliente.component.html',
@@ -18,10 +20,13 @@ import {Formulario} from "../../model/accidente";
 })
 export class ClienteComponent implements OnInit{
 
+  @ViewChild('Checklist', { static: false }) crearChecklistRef!: ElementRef;
   vsts: Array<Visit> = new Array<Visit>();
   cnts: Array<Contract> = new Array<Contract>();
   eps: Array<Formulario> = new Array<Formulario>();
   caps: Array<Cap> = new Array<Cap>();
+  chks: Array<Checklist> = new Array<Checklist>();
+  newChecklistItem: string = '';
   idCliente: number = 0;
   cap: Cap = {
     descripcionServicio: "",
@@ -55,7 +60,9 @@ export class ClienteComponent implements OnInit{
 
 
   constructor(private loginService: LoginService, public dataService: DataService, private route: ActivatedRoute,
-              public snackBar: MatSnackBar, private router: Router, private api: RestService, public dialog: MatDialog) { }
+              public snackBar: MatSnackBar, private router: Router, private api: RestService, public dialog: MatDialog) {
+    (window as any).pdfMake.vfs = pdfFonts.pdfMake.vfs;
+  }
 
   ngOnInit(): void {
     this.listAll();
@@ -85,6 +92,10 @@ export class ClienteComponent implements OnInit{
     this.api.listCaps().subscribe(data => {
       this.dataService.listCaps = data.data.servicios;
       this.caps = data.data.servicios;
+    });
+
+    this.api.listChecklists().subscribe(data => {
+      this.dataService.listChecklists = data.data.checklists;
     });
   }
 
@@ -204,5 +215,120 @@ export class ClienteComponent implements OnInit{
     const value = (event!.target as any).value;
     this.desc = value;
   }
+
+  loadChecklistItems() {
+    const storedItems = localStorage.getItem('checklistItems');
+    if (storedItems) {
+      this.chks = JSON.parse(storedItems);
+    }
+  }
+
+  addChecklist() {
+    if (this.newChecklistItem.trim() !== '') {
+      const newItem: Checklist = {
+        comentario: "",
+        estadoChecklist: "A",
+        fechaCierre: new Date(this.vst.fechaVisita!),
+        fechaCreacion: new Date(),
+        fechaRevision: new Date(this.vst.fechaVisita!),
+        id: 0,
+        idCliente: this.dataService.clienteObservado.idEmpresa.toString(),
+        idProfesional: this.dataService.usuarioObservado.id,
+        nombreChecklist: this.newChecklistItem,
+        idVisita: this.vst.idVisita.toString()
+      };
+      this.chks.push(newItem);
+      this.newChecklistItem = '';
+    }
+  }
+
+  removeChecklist(index: number) {
+    this.chks.splice(index, 1);
+  }
+
+  selectVisita(vs: Visit) {
+    this.vst = vs;
+    this.chks = this.dataService.listChecklists.filter((checklist) => checklist.idVisita === this.vst.idVisita.toString());
+  }
+
+  saveChecklist() {
+    let request: ChecklistRegisterRequest = {
+      checklists: []
+    }
+    request.checklists = this.chks;
+    this.api.registerChecklist(request).subscribe({
+      next: value => {
+        this.snackBar.open(value.message, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+      }, error: err => {
+        this.snackBar.open(err, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+        this.emptyChecklist();
+        this.closeDialog();
+      }, complete: () => {
+        this.emptyChecklist();
+        this.listAll();
+        this.closeDialog();
+      }
+    });
+  }
+
+  emptyChecklist() {
+    this.chks = [];
+  }
+
+  exportChecklist(checklists: Checklist[]) {
+    const tableRows = checklists.map((checklist) => [
+      { text: checklist.id.toString(), alignment: 'center' },
+      { text: checklist.estadoChecklist, alignment: 'center' },
+      { text: checklist.comentario, alignment: 'left' },
+      { text: checklist.idCliente, alignment: 'center' },
+      { text: checklist.idProfesional, alignment: 'center' },
+      { text: checklist.nombreChecklist, alignment: 'left' },
+      { text: checklist.fechaCreacion.toString(), alignment: 'center' },
+      { text: checklist.fechaRevision.toString(), alignment: 'center' },
+      { text: checklist.fechaCierre.toString(), alignment: 'center' },
+      { text: checklist.idVisita, alignment: 'center' },
+    ]);
+
+    const table = {
+      headerRows: 1,
+      widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+      body: [
+        [
+          { text: 'ID', style: 'tableHeader', alignment: 'center' },
+          { text: 'Estado', style: 'tableHeader', alignment: 'center' },
+          { text: 'Comentario', style: 'tableHeader', alignment: 'center' },
+          { text: 'ID Cliente', style: 'tableHeader', alignment: 'center' },
+          { text: 'ID Profesional', style: 'tableHeader', alignment: 'center' },
+          { text: 'Nombre Checklist', style: 'tableHeader', alignment: 'center' },
+          { text: 'Fecha Creación', style: 'tableHeader', alignment: 'center' },
+          { text: 'Fecha Revisión', style: 'tableHeader', alignment: 'center' },
+          { text: 'Fecha Cierre', style: 'tableHeader', alignment: 'center' },
+          { text: 'ID Visita', style: 'tableHeader', alignment: 'center' },
+        ],
+        ...tableRows
+      ],
+      style: 'table'
+    };
+
+    const documentDefinition = {
+      content: [
+        { text: 'Checklist Visita #' + this.chks[0].idVisita, style: 'header' },
+        { table },
+      ],
+      styles: {
+        header: { fontSize: 18, bold: true, margin: [0, 0, 0, 10] },
+        table: { margin: [0, 5, 0, 15] },
+        tableHeader: { bold: true, fillColor: '#CCCCCC', alignment: 'center' }
+      },
+      defaultStyle: {
+        font: 'Roboto'
+      },
+      pageOrientation: 'landscape'
+    };
+    pdfMake.createPdf(documentDefinition).open();
+  }
+
 }
 
