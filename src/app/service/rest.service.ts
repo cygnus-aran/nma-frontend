@@ -17,6 +17,7 @@ import {FindAllEpisodesResponse} from "../model/episode";
 import {CapRegisterRequest, FindAllCapsResponse} from "../model/capacitaciones";
 import {FormularioRegisterRequest} from "../model/accidente";
 import {ChecklistRegisterRequest, FindAllChecklistsResponse} from "../model/checklist";
+import {AsesoriaRegisterRequest, FindAllAsesoriasResponse} from "../model/asesoria";
 
 
 
@@ -97,6 +98,11 @@ export class RestService {
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
     }
 
+    listAsesorias(){
+      return this.http.get<FindAllAsesoriasResponse>(this.URL_SERVICE + 'asesoria/find-all',
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
     registerCap(request: CapRegisterRequest){
       return this.http.post<FindAllCapsResponse>(this.URL_SERVICE + 'servicio/register-servicio', request,
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
@@ -114,6 +120,11 @@ export class RestService {
 
     registerChecklist(request: ChecklistRegisterRequest){
       return this.http.post<FindAllChecklistsResponse>(this.URL_SERVICE + 'checklist/register-checklist', request,
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    registerAsesoria(request: AsesoriaRegisterRequest){
+      return this.http.post<FindAllAsesoriasResponse>( this.URL_SERVICE + 'asesoria/register-asesoria', request,
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
     }
 

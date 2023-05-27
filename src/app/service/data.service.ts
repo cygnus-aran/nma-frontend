@@ -7,6 +7,7 @@ import {Contract} from "../model/contrato";
 import {Cap} from "../model/capacitaciones";
 import {Formulario} from "../model/accidente";
 import {Checklist} from "../model/checklist";
+import {Asesoria} from "../model/asesoria";
 
 // @ts-ignore
 @Injectable({
@@ -23,6 +24,7 @@ export class DataService {
   listEpisodes: Array<Formulario> = new Array<Formulario>();
   listCaps: Array<Cap> = new Array<Cap>();
   listChecklists: Array<Checklist> = new Array<Checklist>();
+  listAsesorias: Array<Asesoria> = new Array<Asesoria>();
 
   clienteObservado: Client = {
     emailEmpresa: "",

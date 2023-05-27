@@ -9,6 +9,8 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Empresa} from "../../model/empresa";
 import {Client, ClientRegisterRequest} from "../../model/cliente";
 import {Formulario} from "../../model/accidente";
+import {FormControl} from "@angular/forms";
+import {Asesoria, AsesoriaRegisterRequest} from "../../model/asesoria";
 
 @Component({
   selector: 'app-home',
@@ -20,6 +22,8 @@ export class HomeComponent implements OnInit {
   emps: Array<Employee> = new Array<Employee>();
   cls: Array<Client> = new Array<Client>();
   eps: Array<Formulario> = new Array<Formulario>();
+  fecase = new FormControl(new Date());
+
 
   empObs: Employee = {
     usuarioIdUsuario: 0,
@@ -43,6 +47,13 @@ export class HomeComponent implements OnInit {
     responsableEmpresa: "",
     usuarioIdUsuario: 0
   }
+  aseObs: Asesoria = {
+    clienteAsesoria: "",
+    fechaAsesoria: new Date(),
+    idAsesoria: 0,
+    idProfesional: "",
+    nombreProfesional: ""
+  }
 
   idcount: number = 0;
   idcountcl: number = 0;
@@ -62,6 +73,8 @@ export class HomeComponent implements OnInit {
     {nombre: "PROFESIONAL", rol: "3"}
   ];
 
+  profName: string = '';
+  profId: number = 0;
 
   constructor(private loginService: LoginService, public dataService: DataService, private route: ActivatedRoute,
               public snackBar: MatSnackBar, private router: Router, private api: RestService, public dialog: MatDialog) { }
@@ -70,6 +83,7 @@ export class HomeComponent implements OnInit {
     this.listUsers();
     this.listClients();
     this.listEpisodes();
+    this.listAsesorias();
   }
 
   logOut(){
@@ -115,6 +129,10 @@ export class HomeComponent implements OnInit {
       this.dataService.listClients = data.data.clientes;
       this.cls = data.data.clientes;
       this.idcountcl =  Number(this.cls[this.cls.length - 1].idEmpresa) + 1;
+      if(this.dataService.usuarioObservado.rol === '2') {
+        this.profName = this.cls.find(cliente => cliente.idEmpresa.toString() === this.dataService.usuarioObservado.idEmpresa)!.responsableEmpresa;
+        this.profId = this.cls.find(cliente => cliente.idEmpresa.toString() === this.dataService.usuarioObservado.idEmpresa)!.usuarioIdUsuario;
+      }
     });
   }
 
@@ -122,8 +140,12 @@ export class HomeComponent implements OnInit {
     this.api.listEpisodes().subscribe(data => {
       this.dataService.listEpisodes = data.data.formularios;
       this.eps = data.data.formularios;
-      // console.log(this.eps[0].idCliente);
-      console.log(this.dataService.usuarioObservado.idEmpresa);
+    });
+  }
+
+  listAsesorias(){
+    this.api.listAsesorias().subscribe(data => {
+      this.dataService.listAsesorias = data.data.asesorias;
     });
   }
 
@@ -260,5 +282,37 @@ export class HomeComponent implements OnInit {
   goGestionUsuario(cl: Client) {
     this.router.navigateByUrl('cliente');
     this.dataService.clienteObservado = cl;
+  }
+
+  createAsesoria() {
+    let request: AsesoriaRegisterRequest = {
+      asesorias: []
+    }
+    this.aseObs.clienteAsesoria = this.dataService.usuarioObservado.idEmpresa;
+    this.aseObs.fechaAsesoria = <Date> this.fecase.value;
+    this.aseObs.idProfesional = this.profId.toString();
+    this.aseObs.nombreProfesional = this.profName;
+    request.asesorias.push(this.aseObs);
+    this.api.registerAsesoria(request).subscribe({
+      next: value => {
+        this.snackBar.open(value.message, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+      }, error: err => {
+        this.snackBar.open(err, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+        this.closeDialog();
+        this.aseObs = {
+          clienteAsesoria: "", fechaAsesoria: new Date(), idAsesoria: 0, idProfesional: "", nombreProfesional: ""
+        }
+        this.fecase = new FormControl(new Date());
+      }, complete: () => {
+        this.listAsesorias();
+        this.aseObs = {
+          clienteAsesoria: "", fechaAsesoria: new Date(), idAsesoria: 0, idProfesional: "", nombreProfesional: ""
+        }
+        this.fecase = new FormControl(new Date());
+        this.closeDialog();
+      }
+    });
   }
 }
