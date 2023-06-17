@@ -23,6 +23,7 @@ import { ClienteComponent } from './component/cliente/cliente.component';
 import {MatInputModule} from "@angular/material/input";
 import { AccidenteComponent } from './component/accidente/accidente.component';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { ActividadComponent } from './component/actividad/actividad.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
     HomeComponent,
     RutPipe,
     ClienteComponent,
-    AccidenteComponent
+    AccidenteComponent,
+    ActividadComponent
   ],
   imports: [
     BrowserModule,

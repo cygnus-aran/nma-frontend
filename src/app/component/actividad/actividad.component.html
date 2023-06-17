@@ -1,0 +1,68 @@
+<header class="header">
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <!-- LOGO -->
+    <div class="logo">
+      <img src="../../../assets/images/logo-nma.gif" alt="Logo NMA" style="width: 96px; height: 42px"/>
+    </div>
+    <div class="options float-start">
+      <a [routerLink]="['/home']" class="text-decoration-none">Inicio</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1'" [routerLink]="['/home']" class="text-decoration-none">Usuarios</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1' || this.dataService.usuarioObservado.rol == '3'" [routerLink]="['/home']" class="text-decoration-none">Clientes</a>
+      <a [routerLink]="['/home']" class="text-decoration-none">Facturas</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/accidente']" class="text-decoration-none">Reportar Accidente</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/home']" class="text-decoration-none">Solicitar Asesoria</a>
+    </div>
+    <div class="close-sesion float-end">
+      <button class="btn-close-sesion" (click)="logOut()">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.0625 1.90195C16.2774 3.48398 17.7188 6.07148 17.7188 9C17.7188 13.8094 13.8234 17.7082 9.01758 17.7188C4.21876 17.7293 0.288288 13.8164 0.281256 9.01406C0.277741 6.08555 1.71915 3.49102 3.93048 1.90547C4.3418 1.61367 4.91485 1.73672 5.16094 2.17617L5.71641 3.16406C5.92383 3.5332 5.8254 4.00078 5.48438 4.25391C4.0254 5.33672 3.09376 7.05234 3.09376 8.99648C3.09024 12.2414 5.7129 14.9062 9.00001 14.9062C12.2203 14.9062 14.9274 12.2977 14.9063 8.96133C14.8957 7.14023 14.0379 5.38242 12.5121 4.25039C12.1711 3.99727 12.0762 3.52969 12.2836 3.16406L12.8391 2.17617C13.0852 1.74023 13.6547 1.61016 14.0625 1.90195ZM10.4063 9.28125V0.84375C10.4063 0.376172 10.0301 0 9.56251 0H8.43751C7.96993 0 7.59376 0.376172 7.59376 0.84375V9.28125C7.59376 9.74883 7.96993 10.125 8.43751 10.125H9.56251C10.0301 10.125 10.4063 9.74883 10.4063 9.28125Z" fill="#FFFFFF"/>
+        </svg>
+        <span class="span-close">
+            <a href="#" class="text-decoration-none">Cerrar sesi&oacute;n</a>
+        </span>
+      </button>
+    </div>
+  </nav>
+</header>
+<div class="wrapper pt-3">
+  <div class="row">
+    <div class="col-6">
+      <h1 class="left title pb-4">Lista de Actividades de Mejora #{{this.dataService.listVisits.length}}</h1>
+    </div>
+    <div class="col-6">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12" style="padding-left: 10%; padding-right: 10%;">
+      <div class="border-tabla mb-3">
+        <table class="table text-center tabla-desktop-admuser mb-0 table-hover d-md-table d-none" style="text-align: center; border-radius: 10px" aria-describedby="tabla-integradores">
+          <thead>
+            <tr class="bg-2 color-1">
+              <th scope="col">Tarea</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Comentario</th>
+              <th scope="col">Fecha Creacion</th>
+              <th scope="col">Fecha Revision</th>
+            </tr>
+          </thead>
+          <tbody class="admuser">
+            <tr *ngFor="let ck of this.chks" class="back-tab-user">
+              <td id="{{ck.idVisita}}a">{{ck.nombreChecklist}}</td>
+              <td id="{{ck.idVisita}}b">
+                <select class="form-control input-login" id="rem" name="ren" [(ngModel)]="ck.estadoChecklist" style="appearance: menulist-button">
+                  <option *ngFor="let es of this.listEstados" [value]="es.id">{{ es.nombre }}</option>
+                </select>
+              </td>
+              <td id="{{ck.idVisita}}c">
+                <input type="text" class="input-login" id="eme" name="eme" [(ngModel)]="ck.comentario" placeholder=""/>
+              </td>
+              <td id="{{ck.idVisita}}d">{{ck.fechaCreacion | date: "dd-MM-yyyy"}}</td>
+              <td id="{{ck.idVisita}}e">{{ck.fechaRevision | date: "dd-MM-yyyy"}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,7 +12,7 @@ import {
 import {catchError, retry} from "rxjs";
 import {ClientRegisterRequest, ClientRegisterResponse, FindAllClientsResponse} from "../model/cliente";
 import {FindAllVisitsResponse, VisitRegisterRequest} from "../model/visita";
-import {FindAllContractsResponse} from "../model/contrato";
+import {ContratoRegisterRequest, FindAllContractsResponse} from "../model/contrato";
 import {FindAllEpisodesResponse} from "../model/episode";
 import {CapRegisterRequest, FindAllCapsResponse} from "../model/capacitaciones";
 import {FormularioRegisterRequest} from "../model/accidente";
@@ -125,6 +125,11 @@ export class RestService {
 
     registerAsesoria(request: AsesoriaRegisterRequest){
       return this.http.post<FindAllAsesoriasResponse>( this.URL_SERVICE + 'asesoria/register-asesoria', request,
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
+    registerContrato(request: ContratoRegisterRequest){
+      return this.http.post<FindAllContractsResponse>( this.URL_SERVICE + 'contrato/register-contrato', request,
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
     }
 

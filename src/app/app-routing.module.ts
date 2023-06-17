@@ -5,6 +5,7 @@ import {LoginComponent} from "./component/login/login.component";
 import {HomeComponent} from "./component/home/home.component";
 import {ClienteComponent} from "./component/cliente/cliente.component";
 import {AccidenteComponent} from "./component/accidente/accidente.component";
+import {ActividadComponent} from "./component/actividad/actividad.component";
 
 const routes: Routes = [  { path: '', component: LoginComponent},
   { path: 'login', component: LoginComponent},
@@ -13,6 +14,8 @@ const routes: Routes = [  { path: '', component: LoginComponent},
   { path: 'cliente', component: ClienteComponent,
     canActivate: [AuthGuard]},
   { path: 'accidente', component: AccidenteComponent,
+    canActivate: [AuthGuard]},
+  { path: 'actividad', component: ActividadComponent,
     canActivate: [AuthGuard]}];
 
 @NgModule({

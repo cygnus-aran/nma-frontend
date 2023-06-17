@@ -38,6 +38,8 @@ export class DataService {
     usuarioIdUsuario: 0
   }
 
+  checkListObservado: Array<Checklist> = new Array<Checklist>();
+
 
   constructor(private http: HttpClient) {
   }

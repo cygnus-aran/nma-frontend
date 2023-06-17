@@ -11,9 +11,15 @@ export interface FindAllContractsResponseData {
   contracts: Contract[];
 }
 
+export interface ContratoRegisterRequest {
+  contracts: Contract[];
+}
+
 export interface Contract {
   idContrato: number;
-  fechaContrato: Date;
+  fechaContrato: Date | undefined;
   estadoContrato: string;
   idClienteContrato: string;
+  cantidadVisita: string;
+  cantidadServicio: string;
 }

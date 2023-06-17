@@ -6,7 +6,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {RestService} from "../../service/rest.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Visit, VisitRegisterRequest} from "../../model/visita";
-import {Contract} from "../../model/contrato";
+import {Contract, ContratoRegisterRequest} from "../../model/contrato";
 import {Asistente, Cap, CapRegisterRequest} from "../../model/capacitaciones";
 import {FormControl} from "@angular/forms";
 import {Formulario} from "../../model/accidente";
@@ -28,6 +28,7 @@ export class ClienteComponent implements OnInit{
   chks: Array<Checklist> = new Array<Checklist>();
   newChecklistItem: string = '';
   idCliente: number = 0;
+  total: number = 0;
   cap: Cap = {
     descripcionServicio: "",
     estadoServicio: "",
@@ -51,12 +52,22 @@ export class ClienteComponent implements OnInit{
     valor: ""
   }
 
+  cnt: Contract = {
+    cantidadServicio: "0",
+    cantidadVisita: "0",
+    estadoContrato: "",
+    fechaContrato: undefined,
+    idClienteContrato: "",
+    idContrato: 0
+  }
+
   private dialogObj: MatDialogRef<any, any> | undefined;
   asistentes: Asistente[] = [];
   materiales: string = "Agregar Materiales Necesarios para la Capacitación Aquí";
   desc: string = "Detalles Visita";
   feccap = new FormControl(new Date());
   fecvis = new FormControl(new Date());
+  feccon = new FormControl(new Date());
 
 
   constructor(private loginService: LoginService, public dataService: DataService, private route: ActivatedRoute,
@@ -134,6 +145,14 @@ export class ClienteComponent implements OnInit{
       nombreProfesional: "",
       personaRunPersona: "",
       valor: ""
+    }
+    this.cnt = {
+      cantidadServicio: "",
+      cantidadVisita: "",
+      estadoContrato: "",
+      fechaContrato: undefined,
+      idClienteContrato: "",
+      idContrato: 0
     }
     this.asistentes = [];
     this.dialogObj?.close();
@@ -330,5 +349,52 @@ export class ClienteComponent implements OnInit{
     pdfMake.createPdf(documentDefinition).open();
   }
 
+  createContract() {
+    let request: ContratoRegisterRequest = {
+      contracts: []
+    }
+    this.cnt.estadoContrato = 'A';
+    this.cnt.fechaContrato = this.feccon.value!;
+    this.cnt.idClienteContrato = String(this.dataService.clienteObservado.idEmpresa);
+    request.contracts.push(this.cnt);
+    this.api.registerContrato(request).subscribe({
+      next: value => {
+        this.snackBar.open(value.message, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+      },
+      error: err => {
+        this.snackBar.open(err, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+        this.closeDialog();
+      },
+      complete: () => {
+        this.listAll();
+        this.closeDialog();
+      }
+    });
+  }
+
+  goToActividad(vs: Visit) {
+    this.dataService.checkListObservado = this.dataService.listChecklists.filter((checklist) => checklist.idVisita === vs.idVisita.toString());
+    this.router.navigateByUrl('actividad')
+  }
+
+  prepContrato(ct: Contract) {
+    this.cnt = ct;
+    for (const v of this.vsts) {
+      if(v.idEmpresa === this.dataService.clienteObservado.idEmpresa.toString()) {
+        this.total += Number(v.valor);
+      }
+    }
+    for (const c of this.caps) {
+      if(c.idCliente === this.dataService.clienteObservado.idEmpresa.toString()) {
+        this.total += c.valorServicio;
+      }
+    }
+  }
+
+  closeContract() {
+
+  }
 }
 
