@@ -1,0 +1,94 @@
+<header class="header" xmlns="http://www.w3.org/1999/html">
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <!-- LOGO -->
+    <div class="logo">
+      <img src="assets/images/logo-nma.gif" alt="Logo NMA" style="width: 96px; height: 42px"/>
+    </div>
+    <div class="options float-start">
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1'" [routerLink]="['/home']" class="text-decoration-none">Inicio</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1'" [routerLink]="['/home']" class="text-decoration-none">Usuarios</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '1' || this.dataService.usuarioObservado.rol == '3'" [routerLink]="['/home']" class="text-decoration-none">Clientes</a>
+      <a [routerLink]="['/home']" class="text-decoration-none">Facturas</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/home']" class="text-decoration-none">Reportar Accidente</a>
+      <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/home']" class="text-decoration-none">Solicitar Asesoria</a>
+    </div>
+    <div class="close-sesion right">
+      <button class="btn-close-sesion" (click)="logOut()">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.0625 1.90195C16.2774 3.48398 17.7188 6.07148 17.7188 9C17.7188 13.8094 13.8234 17.7082 9.01758 17.7188C4.21876 17.7293 0.288288 13.8164 0.281256 9.01406C0.277741 6.08555 1.71915 3.49102 3.93048 1.90547C4.3418 1.61367 4.91485 1.73672 5.16094 2.17617L5.71641 3.16406C5.92383 3.5332 5.8254 4.00078 5.48438 4.25391C4.0254 5.33672 3.09376 7.05234 3.09376 8.99648C3.09024 12.2414 5.7129 14.9062 9.00001 14.9062C12.2203 14.9062 14.9274 12.2977 14.9063 8.96133C14.8957 7.14023 14.0379 5.38242 12.5121 4.25039C12.1711 3.99727 12.0762 3.52969 12.2836 3.16406L12.8391 2.17617C13.0852 1.74023 13.6547 1.61016 14.0625 1.90195ZM10.4063 9.28125V0.84375C10.4063 0.376172 10.0301 0 9.56251 0H8.43751C7.96993 0 7.59376 0.376172 7.59376 0.84375V9.28125C7.59376 9.74883 7.96993 10.125 8.43751 10.125H9.56251C10.0301 10.125 10.4063 9.74883 10.4063 9.28125Z" fill="#FFFFFF"/>
+        </svg>
+        <span class="span-close">
+            <a href="#" class="text-decoration-none">Cerrar sesi&oacute;n</a>
+        </span>
+      </button>
+    </div>
+  </nav>
+</header>
+<div class="wrapper pt-3">
+  <div class="row">
+    <div class="col-6">
+      <h1 class="left title pb-4">Gesti&oacute;n de Facturaci&oacute;n</h1>
+    </div>
+    <div class="col-6">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h4 class="title-blue pb-2 pt-2">Contratos Cerrados</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12" style="padding-left: 10%; padding-right: 10%;">
+      <div class="border-tabla mb-3">
+        <table class="table text-center tabla-desktop-admuser mb-0 table-hover d-md-table d-none" style="text-align: center; border-radius: 10px" aria-describedby="tabla-integradores">
+          <thead>
+          <tr class="bg-2 color-1">
+            <th scope="col">Contrato</th>
+            <th scope="col">Fecha Contrato</th>
+            <th scope="col">Estado Contrato</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Visitas</th>
+            <th scope="col">Capacitaciones</th>
+            <th scope="col">Total Contrato</th>
+            <th scope="col">Cobrar Contrato</th>
+          </tr>
+          </thead>
+          <tbody class="admuser">
+          <tr *ngFor="let ct of this.dataService.listContracts" class="back-tab-user">
+            <td *ngIf="ct.estadoContrato === 'P' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}a">{{ct.idContrato}}</td>
+            <td *ngIf="ct.estadoContrato === 'P' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}b">{{ct.fechaContrato | date:"dd-MM-yyyy"}}</td>
+            <td *ngIf="ct.estadoContrato === 'P' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}c">{{ct.estadoContrato}}</td>
+            <td *ngIf="ct.estadoContrato === 'P' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}d">{{ct.idClienteContrato}}</td>
+            <td *ngIf="ct.estadoContrato === 'P' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}d">{{ct.cantidadVisita}}</td>
+            <td *ngIf="ct.estadoContrato === 'P' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}d">{{ct.cantidadServicio}}</td>
+            <td *ngIf="ct.estadoContrato === 'P' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}d">{{ct.totalContrato | currency: "CLP"}}</td>
+            <td *ngIf="ct.estadoContrato === 'P' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}d">
+              <svg fill="#000000" width="27" height="27" viewBox="0 0 24 24" id="stamp" data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color" style="cursor: pointer">
+                <rect id="secondary" x="7" y="20" width="10" height="1" style="fill: none; stroke: rgb(44, 169, 188); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></rect>
+                <path id="primary" d="M18,20H6V17a1,1,0,0,1,1-1H17a1,1,0,0,1,1,1ZM16,7A4,4,0,1,0,8.45,8.84,12.64,12.64,0,0,1,10,14.72V16h4V14.48a12.33,12.33,0,0,1,1.56-5.66A4,4,0,0,0,16,7Z" style="fill: none; stroke: #17B1E7; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path>
+              </svg>
+            </td>
+            <td *ngIf="ct.estadoContrato === 'A' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}e">
+              <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_78915_12021)">
+                  <path d="M17.2241 9.78214C16.8749 9.78214 16.5918 10.0652 16.5918 10.4145V22.3652C16.5918 22.7142 16.8749 22.9976 17.2241 22.9976C17.5734 22.9976 17.8564 22.7142 17.8564 22.3652V10.4145C17.8564 10.0652 17.5734 9.78214 17.2241 9.78214Z" fill="#17B1E7"/>
+                  <path d="M9.76318 9.78214C9.41392 9.78214 9.13086 10.0652 9.13086 10.4145V22.3652C9.13086 22.7142 9.41392 22.9976 9.76318 22.9976C10.1124 22.9976 10.3955 22.7142 10.3955 22.3652V10.4145C10.3955 10.0652 10.1124 9.78214 9.76318 9.78214Z" fill="#17B1E7"/>
+                  <path d="M4.32518 8.03808V23.617C4.32518 24.5378 4.66283 25.4026 5.25266 26.023C5.83977 26.6452 6.65685 26.9984 7.51196 26.9999H19.4756C20.3309 26.9984 21.148 26.6452 21.7349 26.023C22.3247 25.4026 22.6624 24.5378 22.6624 23.617V8.03808C23.8349 7.72687 24.5946 6.59413 24.4378 5.391C24.2807 4.18812 23.2559 3.2883 22.0426 3.28805H18.8052V2.49766C18.8089 1.83298 18.5461 1.19474 18.0756 0.725195C17.6051 0.255897 16.9658 -0.00542718 16.3012 6.78727e-06H10.6864C10.0217 -0.00542718 9.38248 0.255897 8.91194 0.725195C8.44141 1.19474 8.17861 1.83298 8.18231 2.49766V3.28805H4.9449C3.73164 3.2883 2.70684 4.18812 2.54975 5.391C2.39291 6.59413 3.15268 7.72687 4.32518 8.03808ZM19.4756 25.7353H7.51196C6.43084 25.7353 5.58981 24.8066 5.58981 23.617V8.09366H21.3977V23.617C21.3977 24.8066 20.5567 25.7353 19.4756 25.7353ZM9.44694 2.49766C9.44274 2.16841 9.57217 1.85151 9.80583 1.61908C10.0392 1.38666 10.3569 1.25896 10.6864 1.26464H16.3012C16.6307 1.25896 16.9483 1.38666 17.1817 1.61908C17.4154 1.85126 17.5448 2.16841 17.5406 2.49766V3.28805H9.44694V2.49766ZM4.9449 4.55269H22.0426C22.6713 4.55269 23.1808 5.06224 23.1808 5.69086C23.1808 6.31947 22.6713 6.82903 22.0426 6.82903H4.9449C4.31629 6.82903 3.80673 6.31947 3.80673 5.69086C3.80673 5.06224 4.31629 4.55269 4.9449 4.55269Z" fill="#17B1E7"/>
+                  <path d="M13.4936 9.78214C13.1444 9.78214 12.8613 10.0652 12.8613 10.4145V22.3652C12.8613 22.7142 13.1444 22.9976 13.4936 22.9976C13.8429 22.9976 14.126 22.7142 14.126 22.3652V10.4145C14.126 10.0652 13.8429 9.78214 13.4936 9.78214Z" fill="#17B1E7"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_78915_12021">
+                    <rect width="27" height="27" fill="white"/>
+                  </clipPath>
+                </defs>
+              </svg>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
