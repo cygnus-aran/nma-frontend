@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit {
     runPersona: ""
   }
   clObs: Client = {
+    cantidadEmpleados: "",
     rolIdRol: 0,
     rutEmpresa: "",
     emailEmpresa: "",
@@ -82,7 +83,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.listUsers();
     this.listClients();
-    this.listEpisodes();
     this.listAsesorias();
   }
 
@@ -134,14 +134,18 @@ export class HomeComponent implements OnInit {
         this.profId = this.cls.find(cliente => cliente.idEmpresa.toString() === this.dataService.usuarioObservado.idEmpresa)!.usuarioIdUsuario;
       }
     });
-  }
-
-  listEpisodes(){
     this.api.listEpisodes().subscribe(data => {
       this.dataService.listEpisodes = data.data.formularios;
       this.eps = data.data.formularios;
+      for (const cl of this.dataService.listClients) {
+        cl.cantidadAccidentes = this.eps.filter(ac => ac.idCliente === cl.idEmpresa.toString()).length;
+        cl.accidentabilidad = (cl.cantidadAccidentes/Number(cl.cantidadEmpleados))*100;
+        console.log(cl);
+      }
+      console.log(this.eps);
     });
   }
+
 
   listAsesorias(){
     this.api.listAsesorias().subscribe(data => {
@@ -172,6 +176,7 @@ export class HomeComponent implements OnInit {
       runPersona: ""
     };
     this.clObs = {
+      cantidadEmpleados: "",
       rolIdRol: 0,
       rutEmpresa: "",
       emailEmpresa: "",

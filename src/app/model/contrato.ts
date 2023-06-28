@@ -22,4 +22,5 @@ export interface Contract {
   idClienteContrato: string;
   cantidadVisita: string;
   cantidadServicio: string;
+  totalContrato: string;
 }

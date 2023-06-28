@@ -24,6 +24,8 @@ import {MatInputModule} from "@angular/material/input";
 import { AccidenteComponent } from './component/accidente/accidente.component';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { ActividadComponent } from './component/actividad/actividad.component';
+import { FacturaComponent } from './component/factura/factura.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -34,26 +36,28 @@ import { ActividadComponent } from './component/actividad/actividad.component';
     RutPipe,
     ClienteComponent,
     AccidenteComponent,
-    ActividadComponent
+    ActividadComponent,
+    FacturaComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatSnackBarModule,
-    TypeaheadModule.forRoot(),
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    MatProgressSpinnerModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    TimepickerModule.forRoot()
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatExpansionModule,
+        MatSnackBarModule,
+        TypeaheadModule.forRoot(),
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        MatProgressSpinnerModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        TimepickerModule.forRoot(),
+        MatCheckboxModule
+    ],
   providers: [RestService, {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

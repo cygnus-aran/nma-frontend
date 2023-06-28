@@ -133,4 +133,9 @@ export class RestService {
         {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
     }
 
+    updateContrato(request: ContratoRegisterRequest) {
+      return this.http.post<FindAllContractsResponse>(this.URL_SERVICE + 'contrato/update-contrato', request,
+        {headers: this.httpHeaders, responseType: 'json'}).pipe(retry(1), catchError(this.errorHandler));
+    }
+
 }

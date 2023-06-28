@@ -53,6 +53,7 @@ export class ClienteComponent implements OnInit{
   }
 
   cnt: Contract = {
+    totalContrato: "",
     cantidadServicio: "0",
     cantidadVisita: "0",
     estadoContrato: "",
@@ -147,6 +148,7 @@ export class ClienteComponent implements OnInit{
       valor: ""
     }
     this.cnt = {
+      totalContrato: "",
       cantidadServicio: "",
       cantidadVisita: "",
       estadoContrato: "",
@@ -393,8 +395,28 @@ export class ClienteComponent implements OnInit{
     }
   }
 
-  closeContract() {
-
+  closeContract(cnt: Contract) {
+    let request: ContratoRegisterRequest = {
+      contracts: []
+    }
+    cnt.estadoContrato = 'P';
+    cnt.totalContrato = this.total.toString();
+    request.contracts.push(cnt);
+    this.api.registerContrato(request).subscribe({
+      next: value => {
+        this.snackBar.open(value.message, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+      },
+      error: err => {
+        this.snackBar.open(err, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+        this.closeDialog();
+      },
+      complete: () => {
+        this.listAll();
+        this.closeDialog();
+      }
+    });
   }
 }
 

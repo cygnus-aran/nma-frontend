@@ -20,6 +20,9 @@ export interface Client {
   estadoEmpresa: string;
   usuarioIdUsuario: number;
   rolIdRol: number;
+  cantidadEmpleados: string;
+  accidentabilidad?: number;
+  cantidadAccidentes?: number;
 }
 
 export interface ClientRegisterRequest {

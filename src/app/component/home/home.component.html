@@ -9,7 +9,7 @@
       <a [routerLink]="['/home']" class="text-decoration-none">Inicio</a>
       <a *ngIf="this.dataService.usuarioObservado.rol == '1'" [routerLink]="['/home']" class="text-decoration-none">Usuarios</a>
       <a *ngIf="this.dataService.usuarioObservado.rol == '1' || this.dataService.usuarioObservado.rol == '3'" [routerLink]="['/home']" class="text-decoration-none">Clientes</a>
-      <a [routerLink]="['/home']" class="text-decoration-none">Facturas</a>
+      <a [routerLink]="['/factura']" class="text-decoration-none">Facturas</a>
       <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/accidente']" class="text-decoration-none">Reportar Accidente</a>
       <a *ngIf="this.dataService.usuarioObservado.rol == '2'" [routerLink]="['/home']" class="text-decoration-none" (click)="openModal(crearAsesoria)">Solicitar Asesoria</a>
     </div>
@@ -108,6 +108,8 @@
             <th scope="col">Email</th>
             <th scope="col">Responsable</th>
             <th scope="col">Estado</th>
+            <th scope="col">#Empleados</th>
+            <th scope="col">Accidentabilidad</th>
             <th scope="col"></th>
           </tr>
           </thead>
@@ -120,6 +122,8 @@
             <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}e">{{cl.emailEmpresa}}</td>
             <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}h">{{cl.responsableEmpresa}}</td>
             <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}i">{{cl.estadoEmpresa}}</td>
+            <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}i">{{cl.cantidadEmpleados}}</td>
+            <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}i">{{cl.accidentabilidad}} %</td>
             <td *ngIf="(cl.estadoEmpresa === 'A' && cl.usuarioIdUsuario.toString() === this.dataService.usuarioObservado.id) || (cl.estadoEmpresa === 'A' && this.dataService.usuarioObservado.rol =='1')" id="{{cl.idEmpresa}}l" (click)="deleteClient(cl)" style="cursor: pointer">
               <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_78915_12021)">
@@ -258,7 +262,7 @@
           </div>
           <div class="form-group pb-5">
             <label for="nem">Rut Empresa</label>
-            <input type="text" class="input-login" id="rel" name="rel" [ngModel]="clObs.rutEmpresa | rut" (ngModelChange)="clObs.rutEmpresa=$event; this.limpiaRut(2);" placeholder="Sin punto ni guion"/>
+            <input type="text" class="input-login" id="rel" name="rel" [ngModel]="clObs.rutEmpresa | rut" (ngModelChange)="clObs.rutEmpresa=$event; this.limpiaRut(2);" placeholder="Sin punto ni guion" maxlength="12"/>
           </div>
           <div class="form-group pb-5">
             <label for="fe">Fono Empresa</label>
@@ -267,6 +271,10 @@
           <div class="form-group pb-5">
             <label for="eme">Email Empresa</label>
             <input type="text" class="input-login" id="eme" name="eme" [(ngModel)]="clObs.emailEmpresa" placeholder=""/>
+          </div>
+          <div class="form-group pb-5">
+            <label for="cem">Cantidad Empleados</label>
+            <input type="text" class="input-login" id="cem" name="cem" [(ngModel)]="clObs.cantidadEmpleados" placeholder=""/>
           </div>
           <div class="form-group pb-5">
             <label for="rem">Responsable Empresa</label>

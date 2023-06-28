@@ -27,6 +27,7 @@ export class DataService {
   listAsesorias: Array<Asesoria> = new Array<Asesoria>();
 
   clienteObservado: Client = {
+    cantidadEmpleados: "",
     emailEmpresa: "",
     estadoEmpresa: "",
     fonoEmpresa: "",
