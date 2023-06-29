@@ -26,6 +26,7 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { ActividadComponent } from './component/actividad/actividad.component';
 import { FacturaComponent } from './component/factura/factura.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatMenuModule} from "@angular/material/menu";
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatInputModule,
         ReactiveFormsModule,
         TimepickerModule.forRoot(),
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatMenuModule
     ],
   providers: [RestService, {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
   bootstrap: [AppComponent]

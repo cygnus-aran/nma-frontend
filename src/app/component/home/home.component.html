@@ -4,7 +4,7 @@
     <!-- LOGO -->
     <div class="logo">
       <img src="../../../assets/images/logo-nma.gif" alt="Logo NMA" style="width: 96px; height: 42px"/>
-      <a *ngIf="this.notis.length > 0" class="text-decoration-none" style="cursor: pointer;  margin-left: 80px;">
+      <a *ngIf="this.notis.length === 0" class="text-decoration-none" style="cursor: pointer;  margin-left: 80px;" [matMenuTriggerFor]="notif">
         <svg fill="#FFF" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              width="27" height="27" viewBox="0 0 368.625 368.625"
              xml:space="preserve">
@@ -16,12 +16,28 @@
               <path d="M57.755,134.201l120,73.937c2.01,1.239,4.283,1.858,6.557,1.858s4.547-0.619,6.557-1.858l120-73.937
                 c5.877-3.621,7.707-11.322,4.086-17.199s-11.324-7.707-17.199-4.085l-113.444,69.896L70.869,112.917
                 c-5.875-3.619-13.576-1.793-17.199,4.085C50.048,122.878,51.877,130.58,57.755,134.201z"/>
-              <circle cx="330" cy="90" r="40" fill="red"/>
+              <circle cx="330" cy="70" r="40" fill="red"/>
             </g>
           </g>
         </svg>
       </a>
-      <a *ngIf="this.notis.length === 0" class="text-decoration-none" style="cursor: pointer; margin-left: 80px;">
+      <mat-menu #notif="matMenu" style="max-height: 300px">
+        <button mat-menu-item>Notificacion 1</button>
+        <button mat-menu-item>Notificacion 2</button>
+        <button mat-menu-item>Notificacion 3</button>
+        <button mat-menu-item>Notificacion 4</button>
+        <button mat-menu-item>Notificacion 4</button>
+        <button mat-menu-item>Notificacion 4</button>
+        <button mat-menu-item>Notificacion 4</button>
+        <button mat-menu-item>Notificacion 4</button>
+        <button mat-menu-item>Notificacion 4</button>
+        <button mat-menu-item>Notificacion 4</button>
+        <button mat-menu-item>Notificacion 4</button>
+        <button mat-menu-item>Notificacion 4</button>
+        <button mat-menu-item>Notificacion 4</button>
+        <button mat-menu-item>Notificacion 4</button>
+      </mat-menu>
+      <a *ngIf="this.notis.length > 0" class="text-decoration-none" style="cursor: pointer; margin-left: 80px;">
         <svg fill="#FFF" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              width="27" height="27" viewBox="0 0 368.625 368.625"
              xml:space="preserve">
