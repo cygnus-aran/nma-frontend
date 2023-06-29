@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {AfterViewInit, Component, OnInit, TemplateRef} from '@angular/core';
 import {LoginService} from "../../service/login.service";
 import {DataService} from "../../service/data.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -11,6 +11,8 @@ import {Client, ClientRegisterRequest} from "../../model/cliente";
 import {Formulario} from "../../model/accidente";
 import {FormControl} from "@angular/forms";
 import {Asesoria, AsesoriaRegisterRequest} from "../../model/asesoria";
+import {Cap} from "../../model/capacitaciones";
+import {Visit} from "../../model/visita";
 
 @Component({
   selector: 'app-home',
@@ -23,6 +25,10 @@ export class HomeComponent implements OnInit {
   cls: Array<Client> = new Array<Client>();
   eps: Array<Formulario> = new Array<Formulario>();
   fecase = new FormControl(new Date());
+  notis: Array<String> = new Array<String>();
+  caps: Array<Cap> = new Array<Cap>();
+  vsts: Array<Visit> = new Array<Visit>();
+
 
 
   empObs: Employee = {
@@ -84,6 +90,7 @@ export class HomeComponent implements OnInit {
     this.listUsers();
     this.listClients();
     this.listAsesorias();
+    this.listAll();
   }
 
   logOut(){
@@ -134,15 +141,22 @@ export class HomeComponent implements OnInit {
         this.profId = this.cls.find(cliente => cliente.idEmpresa.toString() === this.dataService.usuarioObservado.idEmpresa)!.usuarioIdUsuario;
       }
     });
-    this.api.listEpisodes().subscribe(data => {
-      this.dataService.listEpisodes = data.data.formularios;
-      this.eps = data.data.formularios;
-      for (const cl of this.dataService.listClients) {
-        cl.cantidadAccidentes = this.eps.filter(ac => ac.idCliente === cl.idEmpresa.toString()).length;
-        cl.accidentabilidad = (cl.cantidadAccidentes/Number(cl.cantidadEmpleados))*100;
-        console.log(cl);
+    this.api.listEpisodes().subscribe({
+      next: value => {
+        this.dataService.listEpisodes = value.data.formularios;
+        this.eps = value.data.formularios;
+      },
+      error: err => {
+        this.snackBar.open(err, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+      },
+      complete: () => {
+        for (const cl of this.dataService.listClients) {
+          cl.cantidadAccidentes = this.eps.filter(ac => ac.idCliente === cl.idEmpresa.toString()).length;
+          cl.accidentabilidad = (cl.cantidadAccidentes/Number(cl.cantidadEmpleados))*100;
+        }
+        this.listarAlertas();
       }
-      console.log(this.eps);
     });
   }
 
@@ -318,6 +332,42 @@ export class HomeComponent implements OnInit {
         this.fecase = new FormControl(new Date());
         this.closeDialog();
       }
+    });
+  }
+
+  listarAlertas() {
+    const currentDate = new Date();
+    const oneWeek = 7 * 24 * 60 * 60 * 1000;
+
+    for (const ct of this.dataService.listContracts) {
+      if (ct.fechaContrato!.getTime() <= currentDate.getTime() && ct.fechaContrato!.getTime() >= currentDate.getTime() - oneWeek) {
+        this.notis.push("Contrato #" + ct.idContrato + " está por vencer")
+      }
+    }
+  }
+
+  private listAll() {
+    this.api.listVisits().subscribe(data => {
+      this.dataService.listVisits = data.data.visits;
+      this.vsts = data.data.visits;
+    });
+
+    this.api.listContracts().subscribe(data => {
+      this.dataService.listContracts = data.data.contracts;
+    });
+
+    this.api.listEpisodes().subscribe(data => {
+      this.dataService.listEpisodes = data.data.formularios;
+      this.eps = data.data.formularios;
+    });
+
+    this.api.listCaps().subscribe(data => {
+      this.dataService.listCaps = data.data.servicios;
+      this.caps = data.data.servicios;
+    });
+
+    this.api.listChecklists().subscribe(data => {
+      this.dataService.listChecklists = data.data.checklists;
     });
   }
 }
