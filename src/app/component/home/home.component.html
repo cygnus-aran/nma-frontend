@@ -4,7 +4,7 @@
     <!-- LOGO -->
     <div class="logo">
       <img src="../../../assets/images/logo-nma.gif" alt="Logo NMA" style="width: 96px; height: 42px"/>
-      <a *ngIf="this.notis.length === 0" class="text-decoration-none" style="cursor: pointer;  margin-left: 80px;" [matMenuTriggerFor]="notif">
+      <a *ngIf="this.dataService.notis.length > 0" class="text-decoration-none" style="cursor: pointer;  margin-left: 80px;" [matMenuTriggerFor]="notif">
         <svg fill="#FFF" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              width="27" height="27" viewBox="0 0 368.625 368.625"
              xml:space="preserve">
@@ -22,22 +22,9 @@
         </svg>
       </a>
       <mat-menu #notif="matMenu" style="max-height: 300px">
-        <button mat-menu-item>Notificacion 1</button>
-        <button mat-menu-item>Notificacion 2</button>
-        <button mat-menu-item>Notificacion 3</button>
-        <button mat-menu-item>Notificacion 4</button>
-        <button mat-menu-item>Notificacion 4</button>
-        <button mat-menu-item>Notificacion 4</button>
-        <button mat-menu-item>Notificacion 4</button>
-        <button mat-menu-item>Notificacion 4</button>
-        <button mat-menu-item>Notificacion 4</button>
-        <button mat-menu-item>Notificacion 4</button>
-        <button mat-menu-item>Notificacion 4</button>
-        <button mat-menu-item>Notificacion 4</button>
-        <button mat-menu-item>Notificacion 4</button>
-        <button mat-menu-item>Notificacion 4</button>
+        <button *ngFor="let nt of this.dataService.notis; index as i" mat-menu-item (click)="this.dataService.notis.splice(i, 1)" style="border-bottom: #17B1E7 1px solid">{{nt}}</button>
       </mat-menu>
-      <a *ngIf="this.notis.length > 0" class="text-decoration-none" style="cursor: pointer; margin-left: 80px;">
+      <a *ngIf="this.dataService.notis.length === 0" class="text-decoration-none" style="cursor: pointer; margin-left: 80px;">
         <svg fill="#FFF" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              width="27" height="27" viewBox="0 0 368.625 368.625"
              xml:space="preserve">

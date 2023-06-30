@@ -29,4 +29,5 @@ export interface Cap {
 
 export interface Asistente {
   nombre: string;
+  rut: string;
 }

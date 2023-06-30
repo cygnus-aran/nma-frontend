@@ -157,6 +157,7 @@
           <tr class="bg-2 color-1">
             <th scope="col">Contrato</th>
             <th scope="col">Fecha Contrato</th>
+            <th scope="col">Fecha Vencimiento</th>
             <th scope="col">Estado Contrato</th>
             <th scope="col">Cliente</th>
             <th scope="col">Visitas</th>
@@ -169,6 +170,7 @@
           <tr *ngFor="let ct of this.dataService.listContracts" class="back-tab-user">
             <td *ngIf="ct.estadoContrato === 'A' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}a">{{ct.idContrato}}</td>
             <td *ngIf="ct.estadoContrato === 'A' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}b">{{ct.fechaContrato | date:"dd-MM-yyyy"}}</td>
+            <td *ngIf="ct.estadoContrato === 'A' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}b">{{ct.fechaVencimiento | date:"dd-MM-yyyy"}}</td>
             <td *ngIf="ct.estadoContrato === 'A' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}c">{{ct.estadoContrato}}</td>
             <td *ngIf="ct.estadoContrato === 'A' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}d">{{ct.idClienteContrato}}</td>
             <td *ngIf="ct.estadoContrato === 'A' && ct.idClienteContrato == this.dataService.clienteObservado.idEmpresa.toString()" id="{{ct.idContrato}}d">{{ct.cantidadVisita}}</td>
@@ -269,8 +271,7 @@
             <th scope="col">Nombre</th>
             <th scope="col">Valor</th>
             <th scope="col">Descripci&oacute;n</th>
-            <th scope="col">Fecha Creaci&oacute;n</th>
-            <th scope="col">Fecha Ejecuci&oacute;n</th>
+            <th scope="col">Fecha Capacitaci&oacute;n</th>
             <th scope="col">Estado Servicio</th>
             <th scope="col">Cliente</th>
             <th scope="col"></th>
@@ -283,7 +284,6 @@
             <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}c">{{cap.valorServicio | currency:"CLP"}}</td>
             <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}d">{{cap.descripcionServicio}}</td>
             <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}e">{{cap.fechaCreacionServicio | date:"dd-MM-yyyy"}}</td>
-            <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}f">{{cap.fechaBajaServicio | date: "dd-MM-yyyy"}}</td>
             <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}g">{{cap.estadoServicio}}</td>
             <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}i">{{cap.idCliente}}</td>
             <td *ngIf="cap.idCliente == this.dataService.clienteObservado.idEmpresa.toString()" id="{{cap.idServicio}}h">
@@ -355,7 +355,7 @@
               <div class="col-6">
                 <label for="rs{{i}}">Rut {{i + 1}}</label>
                 <div class="input-wrapper">
-                  <input type="text" class="input-login mb-2" id="rs{{i}}" name="rs{{i}}"/>
+                  <input type="text" class="input-login mb-2" id="rs{{i}}" name="rs{{i}}" [ngModel]="asistentes[i].rut | rut" (ngModelChange)="asistentes[i].rut=$event; this.limpiaRut(i);" maxlength="12"/>
                 </div>
               </div>
             </div>
@@ -455,6 +455,12 @@
             <input matInput [matDatepicker]="dp4" [formControl]="feccon" [disabled]="true">
             <mat-datepicker-toggle matIconSuffix [for]="dp4"></mat-datepicker-toggle>
             <mat-datepicker #dp4 disabled="false" color="accent"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="left" style="width: 100%">
+            <mat-label>Fecha Vencimiento</mat-label>
+            <input matInput [matDatepicker]="dp5" [formControl]="fecvec" [disabled]="true">
+            <mat-datepicker-toggle matIconSuffix [for]="dp5"></mat-datepicker-toggle>
+            <mat-datepicker #dp5 disabled="false" color="accent"></mat-datepicker>
           </mat-form-field>
           <div class="form-group pb-5">
             <label for="vis">Cantidad Visitas</label>

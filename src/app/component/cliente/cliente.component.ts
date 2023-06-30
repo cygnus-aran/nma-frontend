@@ -53,6 +53,7 @@ export class ClienteComponent implements OnInit{
   }
 
   cnt: Contract = {
+    fechaVencimiento: undefined,
     totalContrato: "",
     cantidadServicio: "0",
     cantidadVisita: "0",
@@ -69,6 +70,7 @@ export class ClienteComponent implements OnInit{
   feccap = new FormControl(new Date());
   fecvis = new FormControl(new Date());
   feccon = new FormControl(new Date());
+  fecvec = new FormControl(new Date());
 
 
   constructor(private loginService: LoginService, public dataService: DataService, private route: ActivatedRoute,
@@ -148,6 +150,7 @@ export class ClienteComponent implements OnInit{
       valor: ""
     }
     this.cnt = {
+      fechaVencimiento: undefined,
       totalContrato: "",
       cantidadServicio: "",
       cantidadVisita: "",
@@ -174,7 +177,7 @@ export class ClienteComponent implements OnInit{
     this.cap.nombreServicio = "Capacitacion " + (this.dataService.listCaps.length + 1);
     let desc = "";
     for (const descElement of this.asistentes) {
-      desc = desc + "\n Asistente: " + descElement.nombre;
+      desc = desc + "\n Asistente: " + descElement.nombre + " " + descElement.rut;
     }
     desc = desc + "\n Materiales: \n" + this.materiales;
     this.cap.descripcionServicio = desc;
@@ -196,7 +199,8 @@ export class ClienteComponent implements OnInit{
 
   agregarAsistente() {
     let as: Asistente = {
-      nombre: ""
+      nombre: "",
+      rut: ""
     }
     this.asistentes.push(as);
   }
@@ -357,6 +361,7 @@ export class ClienteComponent implements OnInit{
     }
     this.cnt.estadoContrato = 'A';
     this.cnt.fechaContrato = this.feccon.value!;
+    this.cnt.fechaVencimiento = this.fecvec.value!;
     this.cnt.idClienteContrato = String(this.dataService.clienteObservado.idEmpresa);
     request.contracts.push(this.cnt);
     this.api.registerContrato(request).subscribe({
@@ -417,6 +422,12 @@ export class ClienteComponent implements OnInit{
         this.closeDialog();
       }
     });
+  }
+
+  limpiaRut(i: number) {
+    this.asistentes[i].rut = this.asistentes[i].rut?.replace(/[^0-9kK]/g, '');
+    this.asistentes[i].rut = this.asistentes[i].rut.toUpperCase();
+    this.dataService.validaRut(this.asistentes[i].rut);
   }
 }
 

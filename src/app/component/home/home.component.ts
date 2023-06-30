@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
   cls: Array<Client> = new Array<Client>();
   eps: Array<Formulario> = new Array<Formulario>();
   fecase = new FormControl(new Date());
-  notis: Array<String> = new Array<String>();
   caps: Array<Cap> = new Array<Cap>();
   vsts: Array<Visit> = new Array<Visit>();
 
@@ -155,7 +154,6 @@ export class HomeComponent implements OnInit {
           cl.cantidadAccidentes = this.eps.filter(ac => ac.idCliente === cl.idEmpresa.toString()).length;
           cl.accidentabilidad = (cl.cantidadAccidentes/Number(cl.cantidadEmpleados))*100;
         }
-        this.listarAlertas();
       }
     });
   }
@@ -336,12 +334,32 @@ export class HomeComponent implements OnInit {
   }
 
   listarAlertas() {
+    this.dataService.notis = new Array<String>();
     const currentDate = new Date();
     const oneWeek = 7 * 24 * 60 * 60 * 1000;
 
     for (const ct of this.dataService.listContracts) {
-      if (ct.fechaContrato!.getTime() <= currentDate.getTime() && ct.fechaContrato!.getTime() >= currentDate.getTime() - oneWeek) {
-        this.notis.push("Contrato #" + ct.idContrato + " está por vencer")
+      const fv = new Date(ct.fechaVencimiento!);
+      if (fv.getTime() > currentDate.getTime() && fv.getTime() < currentDate.getTime() + oneWeek) {
+        this.dataService.notis.push("Contrato #" + ct.idContrato + " está por vencer.")
+      }
+    }
+    for (const vs of this.dataService.listVisits) {
+      const fv = new Date(vs.fechaVisita!);
+      if (fv.getTime() > currentDate.getTime() && fv.getTime() < currentDate.getTime() + oneWeek) {
+        this.dataService.notis.push("Visita #" + vs.idVisita + " agendada pronto!")
+      }
+    }
+    for (const ac of this.dataService.listEpisodes) {
+      const fv = new Date(ac.fechaRevision)
+      if (fv.getTime() > currentDate.getTime() && fv.getTime() < currentDate.getTime() + oneWeek) {
+        this.dataService.notis.push("Accidente #" + ac.folio + " debe ser revisado pronto.")
+      }
+    }
+    for (const cp of this.dataService.listCaps) {
+      const fv = new Date(cp.fechaCreacionServicio!)
+      if (fv.getTime() > currentDate.getTime() && fv.getTime() < currentDate.getTime() + oneWeek) {
+        this.dataService.notis.push("Capacitacion #" + cp.idServicio + " agendada para esta semana!")
       }
     }
   }
@@ -366,8 +384,17 @@ export class HomeComponent implements OnInit {
       this.caps = data.data.servicios;
     });
 
-    this.api.listChecklists().subscribe(data => {
-      this.dataService.listChecklists = data.data.checklists;
+    this.api.listChecklists().subscribe({
+      next: value => {
+        this.dataService.listChecklists = value.data.checklists;
+      },
+      error: err => {
+        this.snackBar.open(err, "OK!", {duration: 2000,
+          verticalPosition: 'bottom', horizontalPosition: 'center'})
+      },
+      complete: () => {
+        this.listarAlertas();
+      }
     });
   }
 }

@@ -136,6 +136,8 @@ export class AccidenteComponent implements OnInit{
     this.acc.actividadRealizada = this.desc;
     this.acc.idCliente = this.dataService.usuarioObservado.idEmpresa;
     this.acc.tipoEpisodio = "Accidente"
+    this.acc.fechaRevision = new Date(this.acc.fechaEpisodio);
+    this.acc.fechaRevision.setMonth(this.acc.fechaRevision.getMonth() + 1);
     request.formularios.push(this.acc);
     this.api.registerForm(request).subscribe({
       next: value => {

@@ -25,6 +25,9 @@ export class DataService {
   listCaps: Array<Cap> = new Array<Cap>();
   listChecklists: Array<Checklist> = new Array<Checklist>();
   listAsesorias: Array<Asesoria> = new Array<Asesoria>();
+  notis: Array<String> = new Array<String>();
+
+
 
   clienteObservado: Client = {
     cantidadEmpleados: "",

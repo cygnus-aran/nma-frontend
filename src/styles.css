@@ -945,3 +945,7 @@ html, body { height: 100%; }
 .mat-mdc-menu-content {
   max-height: 300px !important;
 }
+.mat-mdc-menu-panel.mat-mdc-menu-panel {
+  min-width: 390px !important;
+}
+

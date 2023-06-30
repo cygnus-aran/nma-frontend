@@ -23,4 +23,5 @@ export interface Contract {
   cantidadVisita: string;
   cantidadServicio: string;
   totalContrato: string;
+  fechaVencimiento: Date | undefined;
 }
